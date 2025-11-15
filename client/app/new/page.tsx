@@ -1,29 +1,35 @@
-import { buildClient } from "@/api/buildClient";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import CreateSoundForm from "@/components/forms/CreateSoundForm";
-import { CurrentUser } from "@/types/types";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
-const New = async () => {
-  let currentUser: CurrentUser | null = null;
+const New = () => {
+  const [currentUser, setCurrentUser] = useState(null);
+  const router = useRouter();
 
-  const cookieStore = await cookies();
-  const sessionCookie = cookieStore.get("session")?.value;
-
-  try {
-    const client = buildClient(sessionCookie);
-    const response = await client.get(
-      `${process.env.NEXT_PUBLIC_AUTH_URL}/api/users/currentuser`,
-      { withCredentials: true }
-    );
-    currentUser = response.data.currentUser;
-  } catch (error) {
-    console.error("Error fetching user:", error);
-    currentUser = null;
-  }
+  useEffect(() => {
+    async function fetchCurrentUser() {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_AUTH_URL}/api/users/currentuser`,
+          { withCredentials: true }
+        );
+        setCurrentUser(response.data.currentUser);
+        if (!response.data.currentUser) {
+          router.push("/auth/login");
+        }
+      } catch (error) {
+        setCurrentUser(null);
+        router.push("/auth/login");
+      }
+    }
+    fetchCurrentUser();
+  }, [router]);
 
   if (!currentUser) {
-    redirect("/auth/login");
+    return null;
   }
 
   return <CreateSoundForm />;
