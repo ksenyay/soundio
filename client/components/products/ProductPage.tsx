@@ -45,7 +45,8 @@ const ProductPage = ({ id, isLoggedIn, userId }: ProductPageProps) => {
     try {
       if (!product) {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_PRODUCT_URL}/api/products/${id}`
+          `${process.env.NEXT_PUBLIC_PRODUCT_URL}/api/products/${id}`,
+          { withCredentials: true }
         );
         setProduct(response.data);
         return;

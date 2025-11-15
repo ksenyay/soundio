@@ -14,7 +14,8 @@ export default async function Home({ params }: { params: { id: string } }) {
 
   try {
     const userRes = await client.get(
-      `${process.env.NEXT_PUBLIC_AUTH_URL}/api/users/currentuser`
+      `${process.env.NEXT_PUBLIC_AUTH_URL}/api/users/currentuser`,
+      { withCredentials: true }
     );
     currentUser = userRes.data.currentUser;
 

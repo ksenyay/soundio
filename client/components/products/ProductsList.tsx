@@ -35,7 +35,7 @@ const ProductsList = ({ userId }: ProductsListProps) => {
 
         const resProducts = await axios.get(
           `${process.env.NEXT_PUBLIC_PRODUCT_URL}/api/products`,
-          { params }
+          { params, withCredentials: true }
         );
         let allProducts = resProducts.data.products;
         let total = resProducts.data.totalPages;
