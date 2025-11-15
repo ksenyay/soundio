@@ -18,7 +18,7 @@ const CheckoutPage = async ({
 
   try {
     const userRes = await client.get(
-      `${process.env.AUTH_URL}/api/users/currentuser`
+      `${process.env.NEXT_PUBLIC_AUTH_URL}/api/users/currentuser`
     );
     currentUser = userRes.data.currentUser;
 
