@@ -9,6 +9,8 @@ COPY . .
 
 RUN npm run build
 
+RUN npm prune --production
+
 EXPOSE 4001
 
 CMD ["node", "dist/main.js"]

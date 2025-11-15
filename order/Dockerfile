@@ -1,4 +1,4 @@
-FROM node:18
+FROM node:18-alpine
 
 WORKDIR /app
 
@@ -9,6 +9,8 @@ COPY . .
 
 RUN npm run build
 
-EXPOSE 4000
+RUN npm prune --production
+
+EXPOSE 4002
 
 CMD ["node", "dist/main.js"]
