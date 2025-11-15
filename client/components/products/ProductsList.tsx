@@ -34,7 +34,7 @@ const ProductsList = ({ userId }: ProductsListProps) => {
         if (search) params.search = search.toLowerCase();
 
         const resProducts = await axios.get(
-          `http://localhost:4001/api/products`,
+          `${process.env.NEXT_PUBLIC_PRODUCT_URL}/api/products`,
           { params }
         );
         let allProducts = resProducts.data.products;
@@ -42,7 +42,7 @@ const ProductsList = ({ userId }: ProductsListProps) => {
 
         if (showPurchased && userId) {
           const resOrders = await axios.get(
-            `http://localhost:4002/api/orders/users/${userId}`,
+            `${process.env.NEXT_PUBLIC_ORDER_URL}/api/orders/users/${userId}`,
             { withCredentials: true }
           );
           const purchasedIds = resOrders.data.map(

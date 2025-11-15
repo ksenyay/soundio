@@ -45,7 +45,7 @@ const ProductPage = ({ id, isLoggedIn, userId }: ProductPageProps) => {
     try {
       if (!product) {
         const response = await axios.get(
-          `http://localhost:4001/api/products/${id}`
+          `${process.env.NEXT_PUBLIC_PRODUCT_URL}/api/products/${id}`
         );
         setProduct(response.data);
         return;
@@ -57,7 +57,7 @@ const ProductPage = ({ id, isLoggedIn, userId }: ProductPageProps) => {
           return;
         }
         const res = await axios.get(
-          `http://localhost:4002/api/orders/users/${userId}`,
+          `${process.env.NEXT_PUBLIC_ORDER_URL}/api/orders/users/${userId}`,
           { withCredentials: true }
         );
         const userProducts = res.data;

@@ -26,9 +26,12 @@ const Checkout = ({ id, email }: { id: string; email: string }) => {
 
   async function fetchOrder() {
     try {
-      const res = await axios.get(`http://localhost:4002/api/orders/${id}`, {
-        withCredentials: true,
-      });
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_ORDER_URL}/api/orders/${id}`,
+        {
+          withCredentials: true,
+        }
+      );
       setOrder(res.data);
     } catch (err) {
       console.error(err);
@@ -37,7 +40,7 @@ const Checkout = ({ id, email }: { id: string; email: string }) => {
 
   async function cancelOrder() {
     await axios.patch(
-      `http://localhost:4002/api/orders/${id}`,
+      `${process.env.NEXT_PUBLIC_ORDER_URL}/api/orders/${id}`,
       {},
       { withCredentials: true }
     );
@@ -49,7 +52,7 @@ const Checkout = ({ id, email }: { id: string; email: string }) => {
     try {
       setLoading(true);
       const res = await axios.post(
-        "http://localhost:4003/api/payments/checkout",
+        `${process.env.NEXT_PUBLIC_PAYMENT_URL}/api/payments/checkout`,
         {
           orderId: order.id,
           email,

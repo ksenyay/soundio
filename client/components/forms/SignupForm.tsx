@@ -20,7 +20,7 @@ const SignupForm = () => {
   });
 
   const { makeRequest, errors } = useRequest({
-    url: "http://localhost:4000/api/users/signup",
+    url: `${process.env.NEXT_PUBLIC_AUTH_URL}/api/users/signup`,
     method: "post",
     body: {
       username: formData.username,

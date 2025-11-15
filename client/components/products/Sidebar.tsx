@@ -26,7 +26,7 @@ const Sidebar = ({
   async function handlePurchase(id: string) {
     if (isLoggedIn) {
       const order = await axios.post(
-        `http://localhost:4002/api/orders`,
+        `${process.env.NEXT_PUBLIC_ORDER_URL}/api/orders`,
         {
           productId: id,
         },

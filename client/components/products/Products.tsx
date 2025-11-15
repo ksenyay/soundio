@@ -14,7 +14,7 @@ const Products = async () => {
     try {
       const client = buildClient(sessionCookie);
       const { data } = await client.get(
-        "http://auth:4000/api/users/currentuser"
+        `${process.env.AUTH_URL}/api/users/currentuser`
       );
       userId = data?.currentUser?.id || null;
     } catch (error) {

@@ -12,7 +12,9 @@ const New = async () => {
 
   try {
     const client = buildClient(sessionCookie);
-    const response = await client.get("http://auth:4000/api/users/currentuser");
+    const response = await client.get(
+      `${process.env.AUTH_URL}/api/users/currentuser`
+    );
     currentUser = response.data.currentUser;
   } catch (error) {
     console.error("Error fetching user:", error);

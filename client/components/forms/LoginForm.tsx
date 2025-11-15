@@ -15,7 +15,7 @@ const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const { makeRequest, errors } = useRequest({
-    url: "http://localhost:4000/api/users/signin",
+    url: `${process.env.NEXT_PUBLIC_AUTH_URL}/api/users/signin`,
     method: "post",
     body: {
       email,

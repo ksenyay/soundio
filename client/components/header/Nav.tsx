@@ -19,7 +19,7 @@ const Nav = ({ currentUser }: { currentUser: CurrentUser | undefined }) => {
   const [params, setParams] = useState<URLSearchParams>(new URLSearchParams());
 
   const { makeRequest } = useRequest({
-    url: "http://localhost:4000/api/users/signout",
+    url: `${process.env.NEXT_PUBLIC_AUTH_URL}/api/users/signout`,
     method: "post",
   });
 

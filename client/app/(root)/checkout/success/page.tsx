@@ -13,7 +13,7 @@ const SuccessPage = () => {
   async function handleSuccessCase() {
     console.log(sessionId);
     const res = await axios.post(
-      "http://localhost:4003/api/payments/success",
+      `${process.env.NEXT_PUBLIC_PAYMENT_URL}/api/payments/success`,
       {
         sessionId,
       },

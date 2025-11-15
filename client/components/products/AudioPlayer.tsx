@@ -74,7 +74,7 @@ const AudioPlayer = ({
   async function updateDownloadCount(id: string) {
     try {
       await axios.patch(
-        `http://localhost:4001/api/products/downloads/${id}`,
+        `${process.env.NEXT_PUBLIC_PRODUCT_URL}/api/products/downloads/${id}`,
         {},
         { withCredentials: true }
       );

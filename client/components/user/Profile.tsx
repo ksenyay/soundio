@@ -11,9 +11,12 @@ const Profile = ({ products }: { products: Product[] }) => {
   const router = useRouter();
 
   async function handleDelete(id: string) {
-    await axios.delete(`http://localhost:4001/api/products/${id}`, {
-      withCredentials: true,
-    });
+    await axios.delete(
+      `${process.env.NEXT_PUBLIC_PRODUCT_URL}/api/products/${id}`,
+      {
+        withCredentials: true,
+      }
+    );
     setProductList(productList.filter((p) => p.id !== id));
   }
 

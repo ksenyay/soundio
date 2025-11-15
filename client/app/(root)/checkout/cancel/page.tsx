@@ -12,7 +12,7 @@ const CancelPage = () => {
 
   async function handleCancelledCase() {
     const res = await axios.post(
-      "http://localhost:4003/api/payments/cancelled",
+      `${process.env.NEXT_PUBLIC_PAYMENT_URL}/api/payments/cancelled`,
       {
         sessionId,
       },
