@@ -1,28 +1,32 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { cookies } from "next/headers";
-import { buildClient } from "@/api/buildClient";
 import Nav from "./Nav";
 import { CurrentUser } from "@/types/types";
+import axios from "axios";
 
-const Header = async () => {
-  let currentUser: CurrentUser | undefined;
+const Header = () => {
+  const [currentUser, setCurrentUser] = useState<CurrentUser | undefined>(
+    undefined
+  );
 
-  const cookieStore = await cookies();
-  const sessionCookie = cookieStore.get("session")?.value;
-
-  try {
-    const client = buildClient(sessionCookie);
-    const response = await client.get(
-      `${process.env.NEXT_PUBLIC_AUTH_URL}/api/users/currentuser`,
-      { withCredentials: true }
-    );
-    currentUser = response.data.currentUser;
-  } catch (error) {
-    console.error("Error fetching user:", error);
-    currentUser = undefined;
-  }
+  useEffect(() => {
+    async function fetchCurrentUser() {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_AUTH_URL}/api/users/currentuser`,
+          { withCredentials: true }
+        );
+        setCurrentUser(response.data.currentUser);
+      } catch (error) {
+        console.error("Error fetching user:", error);
+        setCurrentUser(undefined);
+      }
+    }
+    fetchCurrentUser();
+  }, []);
 
   return (
     <header>
