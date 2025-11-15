@@ -13,4 +13,4 @@ RUN npm prune --production
 
 EXPOSE 4003
 
-CMD ["node", "dist/main.js"]
+CMD ["node", "dist/src/main.js"]
