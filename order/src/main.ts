@@ -8,15 +8,15 @@ import cookieSession from 'cookie-session';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  if (!(global as any).crypto) {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    (global as any).crypto = require('crypto');
-  }
-
   app.enableCors({
     origin: 'https://soundio.vercel.app',
     credentials: true,
   });
+
+  if (!(global as any).crypto) {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    (global as any).crypto = require('crypto');
+  }
 
   // Allows listening to events
   app.connectMicroservice<MicroserviceOptions>({

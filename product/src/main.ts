@@ -9,14 +9,14 @@ import { join } from 'path';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.use('/api/products/uploads', express.static(join('/', 'uploads')));
-
-  app.getHttpAdapter().getInstance().set('trust proxy', true);
-
   app.enableCors({
     origin: 'https://soundio.vercel.app',
     credentials: true,
   });
+
+  app.use('/api/products/uploads', express.static(join('/', 'uploads')));
+
+  app.getHttpAdapter().getInstance().set('trust proxy', true);
 
   app.use(
     cookieSession({

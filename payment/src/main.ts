@@ -8,6 +8,11 @@ import cookieSession from 'cookie-session';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.enableCors({
+    origin: 'https://soundio.vercel.app',
+    credentials: true,
+  });
+
   // Allows listening to events
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,
@@ -18,11 +23,6 @@ async function bootstrap() {
         durable: false,
       },
     },
-  });
-
-  app.enableCors({
-    origin: 'https://soundio.vercel.app',
-    credentials: true,
   });
 
   app.use(

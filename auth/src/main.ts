@@ -7,16 +7,16 @@ import cookieSession from 'cookie-session';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.enableCors({
+    origin: 'https://soundio.vercel.app',
+    credentials: true,
+  });
+
   app.getHttpAdapter().getInstance().set('trust proxy', true); // Trust proxy for secure cookies behind proxies/load balancers
 
   if (!process.env.JWT_SECRET) {
     throw new Error('JWT_SECRET is not defined');
   }
-
-  app.enableCors({
-    origin: 'https://soundio.vercel.app',
-    credentials: true,
-  });
 
   app.use(
     cookieSession({
