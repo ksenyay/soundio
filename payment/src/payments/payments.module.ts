@@ -23,7 +23,7 @@ import { PaymentSchema } from '../db/payment.schema';
         name: 'PAYMENT_RABBITMQ_SERVICE',
         transport: Transport.RMQ,
         options: {
-          urls: ['amqp://user:password@rabbitmq:5672'],
+          urls: [process.env.RABBIT_MQ_URL!],
           queue: 'payment_queue',
           queueOptions: {
             durable: false,

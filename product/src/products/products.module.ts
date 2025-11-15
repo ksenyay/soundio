@@ -23,7 +23,7 @@ import { StorageService } from '../storage/storage.service';
         name: 'PRODUCT_RABBITMQ_SERVICE',
         transport: Transport.RMQ,
         options: {
-          urls: ['amqp://user:password@rabbitmq:5672'],
+          urls: [process.env.RABBIT_MQ_URL!],
           queue: 'product_queue',
           queueOptions: {
             durable: false,

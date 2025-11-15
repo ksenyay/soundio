@@ -25,7 +25,7 @@ import { ScheduleModule } from '@nestjs/schedule';
         name: 'ORDER_RABBITMQ_SERVICE',
         transport: Transport.RMQ,
         options: {
-          urls: ['amqp://user:password@rabbitmq:5672'],
+          urls: [process.env.RABBIT_MQ_URL!],
           queue: 'order_queue',
           queueOptions: {
             durable: false,
