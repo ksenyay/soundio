@@ -4,7 +4,6 @@ import { ValidationPipe } from '@nestjs/common';
 import { AllExceptionsFilter } from '../filters/all-exceptions.filter';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import cookieSession from 'cookie-session';
-import * as bodyParser from 'body-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -22,14 +21,9 @@ async function bootstrap() {
   });
 
   app.enableCors({
-    origin: 'http://localhost:3000',
+    origin: 'https://soundio.vercel.app',
     credentials: true,
   });
-
-  app.use(
-    '/api/payments/webhook',
-    bodyParser.raw({ type: 'application/json' }),
-  );
 
   app.use(
     cookieSession({
