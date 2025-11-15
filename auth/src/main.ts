@@ -18,15 +18,27 @@ async function bootstrap() {
     throw new Error('JWT_SECRET is not defined');
   }
 
-  app.use(
-    cookieSession({
-      signed: false,
-      secure: process.env.NODE_ENV === 'production',
-      httpOnly: true,
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-      maxAge: 12 * 60 * 60 * 1000,
-    }),
-  );
+  if (process.env.NODE_ENV === 'production') {
+    app.use(
+      cookieSession({
+        signed: false,
+        secure: true,
+        httpOnly: true,
+        sameSite: 'none',
+        maxAge: 12 * 60 * 60 * 1000,
+      }),
+    );
+  } else {
+    app.use(
+      cookieSession({
+        signed: false,
+        secure: false,
+        httpOnly: true,
+        sameSite: 'lax',
+        maxAge: 12 * 60 * 60 * 1000,
+      }),
+    );
+  }
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   app.useGlobalFilters(new AllExceptionsFilter());

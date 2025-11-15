@@ -18,12 +18,27 @@ async function bootstrap() {
 
   app.getHttpAdapter().getInstance().set('trust proxy', true);
 
-  app.use(
-    cookieSession({
-      signed: false,
-      secure: true,
-    }),
-  );
+  if (process.env.NODE_ENV === 'production') {
+    app.use(
+      cookieSession({
+        signed: false,
+        secure: true,
+        httpOnly: true,
+        sameSite: 'none',
+        maxAge: 12 * 60 * 60 * 1000,
+      }),
+    );
+  } else {
+    app.use(
+      cookieSession({
+        signed: false,
+        secure: false,
+        httpOnly: true,
+        sameSite: 'lax',
+        maxAge: 12 * 60 * 60 * 1000,
+      }),
+    );
+  }
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   app.useGlobalFilters(new AllExceptionsFilter());
