@@ -52,6 +52,7 @@ async function bootstrap() {
   app.useGlobalFilters(new AllExceptionsFilter());
 
   await app.startAllMicroservices();
-  await app.listen(process.env.PORT ?? 4002);
+  const port = process.env.PORT || 4002;
+  await app.listen(port, '0.0.0.0');
 }
 bootstrap();
