@@ -11,4 +11,4 @@ RUN npm run build
 
 EXPOSE 4001
 
-CMD ["npm", "run", "start:dev"]
+CMD ["node", "dist/main.js"]
