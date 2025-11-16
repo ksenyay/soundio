@@ -40,7 +40,7 @@ const Nav = () => {
       {},
       { withCredentials: true }
     );
-    router.refresh();
+    await fetchCurrentUser();
   }
 
   function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
