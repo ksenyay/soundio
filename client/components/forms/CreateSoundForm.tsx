@@ -56,7 +56,7 @@ const CreateSoundForm = () => {
     if (imageFile) data.append("image", imageFile);
     if (soundFile) data.append("file", soundFile);
 
-    console.log(document.cookie);
+    console.log("Cookie", document.cookie);
 
     await makeRequest(data);
     setIsLoading(false);
