@@ -6,30 +6,41 @@ import React, { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import { usePathname } from "next/navigation";
 import { Button } from "../ui/button";
-import useRequest from "../../hooks/sendRequest";
 import { useRouter } from "next/navigation";
 import ProfileDropdown from "./ProfileDropdown";
 import { Search } from "lucide-react";
 import { CurrentUser } from "@/types/types";
+import axios from "axios";
 
-const Nav = ({ currentUser }: { currentUser: CurrentUser | undefined }) => {
+const Nav = () => {
   const [search, setSearch] = useState("");
   const pathName = usePathname();
   const router = useRouter();
   const [params, setParams] = useState<URLSearchParams>(new URLSearchParams());
+  const [currentUser, setCurrentUser] = useState<CurrentUser | undefined>(
+    undefined
+  );
 
-  const { makeRequest } = useRequest({
-    url: `${process.env.NEXT_PUBLIC_AUTH_URL}/api/users/signout`,
-    method: "post",
-  });
+  async function fetchCurrentUser() {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_AUTH_URL}/api/users/currentuser`,
+        { withCredentials: true }
+      );
+      setCurrentUser(response.data.currentUser);
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      setCurrentUser(undefined);
+    }
+  }
 
   async function signout() {
-    try {
-      await makeRequest();
-      router.refresh();
-    } catch (error) {
-      console.error("Signout failed:", error);
-    }
+    await axios.post(
+      `${process.env.NEXT_PUBLIC_AUTH_URL}/api/users/signout`,
+      {},
+      { withCredentials: true }
+    );
+    router.refresh();
   }
 
   function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
@@ -37,7 +48,6 @@ const Nav = ({ currentUser }: { currentUser: CurrentUser | undefined }) => {
     setSearch(value);
     localStorage.setItem("searchInput", value);
 
-    // Always work with a fresh copy of params
     const newParams = new URLSearchParams(params.toString());
     if (value === "") {
       newParams.delete("search");
@@ -52,6 +62,7 @@ const Nav = ({ currentUser }: { currentUser: CurrentUser | undefined }) => {
   }
 
   useEffect(() => {
+    fetchCurrentUser();
     setParams(new URLSearchParams(window.location.search));
     const savedSearch = localStorage.getItem("searchInput") || "";
     setSearch(savedSearch);
