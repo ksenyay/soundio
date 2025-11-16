@@ -56,6 +56,8 @@ const CreateSoundForm = () => {
     if (imageFile) data.append("image", imageFile);
     if (soundFile) data.append("file", soundFile);
 
+    console.log(document.cookie);
+
     await makeRequest(data);
     setIsLoading(false);
   }
@@ -143,6 +145,7 @@ const CreateSoundForm = () => {
                 type="file"
                 accept="image/*"
                 required
+                disabled={isLoading}
                 onChange={(e) => {
                   if (e.target.files && e.target.files[0]) {
                     setImageFile(e.target.files[0]);
@@ -159,6 +162,7 @@ const CreateSoundForm = () => {
                 type="file"
                 accept="audio/*"
                 required
+                disabled={isLoading}
                 onChange={(e) => {
                   if (e.target.files && e.target.files[0]) {
                     setSoundFile(e.target.files[0]);
