@@ -15,7 +15,7 @@ const ProfilePage = () => {
     async function fetchData() {
       try {
         const userRes = await axios.get(
-          `${process.env.NEXT_PUBLIC_AUTH_URL}/api/users/currentuser`,
+          `https://soundio.onrender.com/api/users/currentuser`,
           { withCredentials: true }
         );
         const user = userRes.data.currentUser;

@@ -15,7 +15,7 @@ const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const { makeRequest, errors } = useRequest({
-    url: `${process.env.NEXT_PUBLIC_AUTH_URL}/api/users/signin`,
+    url: `https://soundio.onrender.com/api/users/signin`,
     method: "post",
     body: {
       email,

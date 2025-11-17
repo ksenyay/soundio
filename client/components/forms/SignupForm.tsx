@@ -20,7 +20,7 @@ const SignupForm = () => {
   });
 
   const { makeRequest, errors } = useRequest({
-    url: `${process.env.NEXT_PUBLIC_AUTH_URL}/api/users/signup`,
+    url: `https://soundio.onrender.com/api/users/signup`,
     method: "post",
     body: {
       username: formData.username,

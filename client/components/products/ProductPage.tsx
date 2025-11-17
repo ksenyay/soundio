@@ -58,7 +58,7 @@ const ProductPage = ({ id, isLoggedIn, userId }: ProductPageProps) => {
           return;
         }
         const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_ORDER_URL}/api/orders/users/${userId}`,
+          `https://soundio.onrender.com/api/orders/users/${userId}`,
           { withCredentials: true }
         );
         const userProducts = res.data;

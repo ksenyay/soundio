@@ -18,7 +18,7 @@ const CheckoutPage = async ({
 
   try {
     const userRes = await client.get(
-      `${process.env.NEXT_PUBLIC_AUTH_URL}/api/users/currentuser`,
+      `https://soundio.onrender.com/api/users/currentuser`,
       { withCredentials: true }
     );
     currentUser = userRes.data.currentUser;
