@@ -34,7 +34,7 @@ const ProductsList = ({ userId }: ProductsListProps) => {
         if (search) params.search = search.toLowerCase();
 
         const resProducts = await axios.get(
-          `${process.env.NEXT_PUBLIC_PRODUCT_URL}/api/products`,
+          `https://product-service-fsp5.onrender.com/api/products`,
           { params, withCredentials: true }
         );
         let allProducts = resProducts.data.products;
