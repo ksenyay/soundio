@@ -8,9 +8,16 @@ interface RequestOptions {
   method: "get" | "post" | "put" | "delete" | "patch";
   body?: unknown;
   isFormData?: boolean;
+  withCredentials?: boolean;
 }
 
-export default ({ url, method, body, isFormData = false }: RequestOptions) => {
+export default ({
+  url,
+  method,
+  body,
+  isFormData = false,
+  withCredentials = false,
+}: RequestOptions) => {
   const [errors, setErrors] = useState<string[]>([]);
   const router = useRouter();
 
@@ -27,7 +34,7 @@ export default ({ url, method, body, isFormData = false }: RequestOptions) => {
         url,
         data: formData ? formData : body,
         headers,
-        withCredentials: true,
+        withCredentials,
       });
 
       console.log("Success:", response.data);

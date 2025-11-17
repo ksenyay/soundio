@@ -32,6 +32,7 @@ const CreateSoundForm = () => {
     url: `https://product-service-fsp5.onrender.com/api/products`,
     method: "post",
     isFormData: true,
+    withCredentials: true,
   });
 
   function handleChange(
