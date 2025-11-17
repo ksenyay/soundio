@@ -27,6 +27,7 @@ const SignupForm = () => {
       email: formData.email,
       password: formData.password,
     },
+    withCredentials: true,
   });
 
   async function submitForm(e: React.FormEvent) {
