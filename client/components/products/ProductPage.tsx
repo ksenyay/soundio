@@ -45,7 +45,7 @@ const ProductPage = ({ id, isLoggedIn, userId }: ProductPageProps) => {
     try {
       if (!product) {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_PRODUCT_URL}/api/products/${id}`,
+          `https://product-service-fsp5.onrender.com/api/products/${id}`,
           { withCredentials: true }
         );
         setProduct(response.data);
@@ -58,7 +58,7 @@ const ProductPage = ({ id, isLoggedIn, userId }: ProductPageProps) => {
           return;
         }
         const res = await axios.get(
-          `https://soundio.onrender.com/api/orders/users/${userId}`,
+          `https://soundio-nfng.onrender.com/api/orders/users/${userId}`,
           { withCredentials: true }
         );
         const userProducts = res.data;

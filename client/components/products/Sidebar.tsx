@@ -26,7 +26,7 @@ const Sidebar = ({
   async function handlePurchase(id: string) {
     if (isLoggedIn) {
       const order = await axios.post(
-        `${process.env.NEXT_PUBLIC_ORDER_URL}/api/orders`,
+        `https://soundio-nfng.onrender.com/api/orders`,
         {
           productId: id,
         },

@@ -25,7 +25,7 @@ const ProfilePage = () => {
           return;
         }
         const productsRes = await axios.get(
-          `${process.env.NEXT_PUBLIC_PRODUCT_URL}/api/products/my-products/${user.id}`,
+          `https://product-service-fsp5.onrender.com/api/products/my-products/${user.id}`,
           { withCredentials: true }
         );
         setProducts(productsRes.data);

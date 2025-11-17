@@ -29,7 +29,7 @@ const CreateSoundForm = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { makeRequest, errors } = useRequest({
-    url: `${process.env.NEXT_PUBLIC_PRODUCT_URL}/api/products`,
+    url: `https://product-service-fsp5.onrender.com/api/products`,
     method: "post",
     isFormData: true,
   });

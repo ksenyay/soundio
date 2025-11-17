@@ -13,7 +13,7 @@ const SuccessPage = () => {
   async function handleSuccessCase() {
     console.log(sessionId);
     const res = await axios.post(
-      `${process.env.NEXT_PUBLIC_PAYMENT_URL}/api/payments/success`,
+      `https://payment-service-itru.onrender.com/api/payments/success`,
       {
         sessionId,
       },

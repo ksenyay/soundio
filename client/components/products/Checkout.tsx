@@ -27,7 +27,7 @@ const Checkout = ({ id, email }: { id: string; email: string }) => {
   async function fetchOrder() {
     try {
       const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_ORDER_URL}/api/orders/${id}`,
+        `https://soundio-nfng.onrender.com/api/orders/${id}`,
         {
           withCredentials: true,
         }
@@ -40,7 +40,7 @@ const Checkout = ({ id, email }: { id: string; email: string }) => {
 
   async function cancelOrder() {
     await axios.patch(
-      `${process.env.NEXT_PUBLIC_ORDER_URL}/api/orders/${id}`,
+      `https://soundio-nfng.onrender.com/api/orders/${id}`,
       {},
       { withCredentials: true }
     );
@@ -52,7 +52,7 @@ const Checkout = ({ id, email }: { id: string; email: string }) => {
     try {
       setLoading(true);
       const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_PAYMENT_URL}/api/payments/checkout`,
+        `https://payment-service-itru.onrender.com/api/payments/checkout`,
         {
           orderId: order.id,
           email,

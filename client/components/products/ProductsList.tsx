@@ -42,7 +42,7 @@ const ProductsList = ({ userId }: ProductsListProps) => {
 
         if (showPurchased && userId) {
           const resOrders = await axios.get(
-            `${process.env.NEXT_PUBLIC_ORDER_URL}/api/orders/users/${userId}`,
+            `https://soundio-nfng.onrender.com/api/orders/users/${userId}`,
             { withCredentials: true }
           );
           const purchasedIds = resOrders.data.map(

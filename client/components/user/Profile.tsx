@@ -12,7 +12,7 @@ const Profile = ({ products }: { products: Product[] }) => {
 
   async function handleDelete(id: string) {
     await axios.delete(
-      `${process.env.NEXT_PUBLIC_PRODUCT_URL}/api/products/${id}`,
+      `https://product-service-fsp5.onrender.com/api/products/${id}`,
       {
         withCredentials: true,
       }
