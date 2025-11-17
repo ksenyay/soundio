@@ -21,11 +21,11 @@ async function bootstrap() {
   if (process.env.NODE_ENV === 'production') {
     app.use(
       cookieSession({
-        name: 'session',
         signed: false,
         secure: true,
         httpOnly: true,
         sameSite: 'none',
+        domain: '.soundio.vercel.app',
         maxAge: 12 * 60 * 60 * 1000,
       }),
     );
@@ -36,6 +36,7 @@ async function bootstrap() {
         secure: false,
         httpOnly: true,
         sameSite: 'lax',
+        domain: '.soundio.vercel.app',
         maxAge: 12 * 60 * 60 * 1000,
       }),
     );
