@@ -9,7 +9,11 @@ const SuccessPage = () => {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get("session_id");
   const [productId, setProductId] = useState();
-  const cookie = document.cookie;
+  let cookie;
+  if (typeof document !== "undefined") {
+    cookie = document.cookie;
+  }
+
   const client = buildClient(cookie);
 
   async function handleSuccessCase() {
@@ -18,8 +22,7 @@ const SuccessPage = () => {
       `https://payment-service-itru.onrender.com/api/payments/success`,
       {
         sessionId,
-      },
-      { withCredentials: true }
+      }
     );
 
     setProductId(res.data.productId);

@@ -21,7 +21,10 @@ const Nav = () => {
     undefined
   );
 
-  const cookie = document.cookie;
+  let cookie;
+  if (typeof document !== "undefined") {
+    cookie = document.cookie;
+  }
   const client = buildClient(cookie);
 
   async function fetchCurrentUser() {

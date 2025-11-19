@@ -5,7 +5,6 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import ErrorMessage from "../ErrorMessage";
 import useRequest from "../../hooks/sendRequest";
-import { buildClient } from "@/api/buildClient";
 
 const categories = [
   "nature",
