@@ -37,7 +37,10 @@ const Nav = () => {
 
   async function signout() {
     localStorage.removeItem("jwt");
+
     await fetchCurrentUser();
+
+    router.refresh();
   }
 
   function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
