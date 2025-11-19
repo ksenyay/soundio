@@ -5,6 +5,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import ErrorMessage from "../ErrorMessage";
 import useRequest from "../../hooks/sendRequest";
+import { useRouter } from "next/navigation";
 
 const categories = [
   "nature",
@@ -27,6 +28,7 @@ const CreateSoundForm = () => {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [soundFile, setSoundFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const { makeRequest, errors } = useRequest({
     url: `https://product-service-fsp5.onrender.com/api/products`,
@@ -58,6 +60,7 @@ const CreateSoundForm = () => {
 
     await makeRequest(data);
     setIsLoading(false);
+    router.push("/");
   }
 
   return (

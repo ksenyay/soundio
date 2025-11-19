@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  HttpCode,
-  Post,
-  Req,
-  Res,
-} from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Post, Req } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './dto';
 import { LoginUserDto } from './dto';
@@ -24,20 +16,14 @@ export class AuthController {
 
   @Post('signup')
   @HttpCode(201)
-  async signup(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
-    const { token, user } = await this.authService.signup(createUserDto);
-
-    res.setHeader('Authorization', `Bearer ${token}`);
-    return user;
+  async signup(@Body() createUserDto: CreateUserDto) {
+    return this.authService.signup(createUserDto);
   }
 
   @Post('signin')
   @HttpCode(200)
-  async signin(@Body() loginUserDto: LoginUserDto, @Res() res: Response) {
-    const { token, user } = await this.authService.signin(loginUserDto);
-
-    res.setHeader('Authorization', `Bearer ${token}`);
-    return user;
+  async signin(@Body() loginUserDto: LoginUserDto) {
+    return this.authService.signin(loginUserDto);
   }
 
   // @Post('signout')

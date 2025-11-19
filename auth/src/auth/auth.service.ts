@@ -1,4 +1,4 @@
-import { Body, Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import type { Request } from 'express';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -31,11 +31,11 @@ export class AuthService {
 
     await newUser.save();
 
-    return { token, user: newUser };
+    return { user: newUser, token };
   }
 
   async signin(
-    @Body() data: LoginUserDto,
+    data: LoginUserDto,
   ): Promise<{ token: string; user: UserDocument }> {
     const { email, password } = data;
 
@@ -56,7 +56,7 @@ export class AuthService {
       process.env.JWT_SECRET!,
     );
 
-    return { token, user };
+    return { user, token };
   }
 
   // signout(req: Request): string {

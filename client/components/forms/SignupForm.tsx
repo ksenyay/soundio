@@ -9,6 +9,7 @@ import ErrorMessage from "../ErrorMessage";
 import useRequest from "../../hooks/sendRequest";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const SignupForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -18,6 +19,7 @@ const SignupForm = () => {
     password: "",
     agreeToTerms: false,
   });
+  const router = useRouter();
 
   const { makeRequest, errors } = useRequest({
     url: `https://soundio.onrender.com/api/users/signup`,
@@ -37,9 +39,11 @@ const SignupForm = () => {
     }
     const res = await makeRequest();
 
-    const token = res?.headers["authorization"]?.replace("Bearer ", "");
+    const token = res?.data.token;
+
     if (token) {
       localStorage.setItem("jwt", token);
+      router.push("/");
     }
   }
 
