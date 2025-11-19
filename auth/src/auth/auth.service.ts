@@ -1,10 +1,4 @@
-import {
-  Body,
-  ConflictException,
-  Injectable,
-  Req,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Body, Injectable, UnauthorizedException } from '@nestjs/common';
 import type { Request } from 'express';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -21,37 +15,28 @@ export class AuthService {
     return { currentUser: req.currentUser || undefined };
   }
 
-  async signup(data: CreateUserDto, req: Request): Promise<UserDocument> {
+  async signup(
+    data: CreateUserDto,
+  ): Promise<{ token: string; user: UserDocument }> {
     const { username, email, password } = data;
 
     const hashed = await Password.hash(password);
 
     const newUser = new this.user({ username, email, password: hashed });
-    try {
-      const token = jwt.sign(
-        { id: newUser._id, username: newUser.username, email: newUser.email },
-        process.env.JWT_SECRET!,
-      );
 
-      req.session = { jwt: token };
+    const token = jwt.sign(
+      { id: newUser._id, username: newUser.username, email: newUser.email },
+      process.env.JWT_SECRET!,
+    );
 
-      return await newUser.save();
-    } catch (err) {
-      if (err.keyPattern?.email) {
-        throw new ConflictException('User with this email already exists');
-      }
-      if (err.keyPattern?.username) {
-        throw new ConflictException('Username already taken');
-      }
+    await newUser.save();
 
-      throw new ConflictException('User already exists');
-    }
+    return { token, user: newUser };
   }
 
   async signin(
     @Body() data: LoginUserDto,
-    @Req() req: Request,
-  ): Promise<string> {
+  ): Promise<{ token: string; user: UserDocument }> {
     const { email, password } = data;
 
     const user = await this.user.findOne({ email }).exec();
@@ -71,13 +56,11 @@ export class AuthService {
       process.env.JWT_SECRET!,
     );
 
-    req.session = { jwt: token };
-
-    return `User ${user.username} signed in! Email: ${email}, Password: ${password}`;
+    return { token, user };
   }
 
-  signout(req: Request): string {
-    req.session = undefined;
-    return 'User signed out';
-  }
+  // signout(req: Request): string {
+  //   req.session = undefined;
+  //   return 'User signed out';
+  // }
 }

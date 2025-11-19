@@ -8,7 +8,7 @@ interface RequestOptions {
   method: "get" | "post" | "put" | "delete" | "patch";
   body?: unknown;
   isFormData?: boolean;
-  withCredentials?: boolean;
+  sessionCookie?: string;
 }
 
 export default ({
@@ -16,7 +16,7 @@ export default ({
   method,
   body,
   isFormData = false,
-  withCredentials = false,
+  sessionCookie,
 }: RequestOptions) => {
   const [errors, setErrors] = useState<string[]>([]);
   const router = useRouter();
@@ -25,16 +25,19 @@ export default ({
     setErrors([]);
 
     try {
-      const headers = isFormData
+      const headers: Record<string, string> = isFormData
         ? { "Content-Type": "multipart/form-data" }
         : { "Content-Type": "application/json" };
+
+      if (sessionCookie) {
+        headers["cookie"] = `session=${sessionCookie}`;
+      }
 
       const response = await axios({
         method,
         url,
         data: formData ? formData : body,
         headers,
-        withCredentials,
       });
 
       console.log("Success:", response.data);

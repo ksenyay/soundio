@@ -4,7 +4,7 @@ import { Clock, FileAudio, HardDrive, Shield } from "lucide-react";
 import React from "react";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+import { buildClient } from "@/api/buildClient";
 
 const Sidebar = ({
   product,
@@ -23,14 +23,16 @@ const Sidebar = ({
 }) => {
   const router = useRouter();
 
+  const cookie = document.cookie;
+  const client = buildClient(cookie);
+
   async function handlePurchase(id: string) {
     if (isLoggedIn) {
-      const order = await axios.post(
+      const order = await client.post(
         `https://soundio-nfng.onrender.com/api/orders`,
         {
           productId: id,
-        },
-        { withCredentials: true }
+        }
       );
       console.log(order.data);
 

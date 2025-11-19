@@ -2,17 +2,19 @@
 
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import axios from "axios";
 import Link from "next/link";
+import { buildClient } from "@/api/buildClient";
 
 const SuccessPage = () => {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get("session_id");
   const [productId, setProductId] = useState();
+  const cookie = document.cookie;
+  const client = buildClient(cookie);
 
   async function handleSuccessCase() {
     console.log(sessionId);
-    const res = await axios.post(
+    const res = await client.post(
       `https://payment-service-itru.onrender.com/api/payments/success`,
       {
         sessionId,

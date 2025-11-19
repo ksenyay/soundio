@@ -1,6 +1,6 @@
 "use client";
 
-import axios from "axios";
+import { buildClient } from "@/api/buildClient";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -9,9 +9,11 @@ const CancelPage = () => {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get("session_id");
   const [productId, setProductId] = useState();
+  const cookie = document.cookie;
+  const client = buildClient(cookie);
 
   async function handleCancelledCase() {
-    const res = await axios.post(
+    const res = await client.post(
       `https://payment-service-itru.onrender.com/api/payments/cancelled`,
       {
         sessionId,

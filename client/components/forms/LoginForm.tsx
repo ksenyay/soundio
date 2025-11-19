@@ -13,6 +13,7 @@ const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const cookie = document.cookie;
 
   const { makeRequest, errors } = useRequest({
     url: `https://soundio.onrender.com/api/users/signin`,
@@ -21,7 +22,7 @@ const LoginForm = () => {
       email,
       password,
     },
-    withCredentials: true,
+    sessionCookie: cookie,
   });
 
   async function submitForm(e: React.FormEvent) {

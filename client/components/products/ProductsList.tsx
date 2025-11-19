@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import Card from "./Card";
 import Pagination from "./Pagination";
 import { useSearchParams } from "next/navigation";
 import { Product } from "@/types/types";
+import { buildClient } from "@/api/buildClient";
 
 type ProductsListProps = {
   userId: string | null;
@@ -22,44 +22,47 @@ const ProductsList = ({ userId }: ProductsListProps) => {
   const page = Number(searchParams.get("page")) || 1;
   const limit = 8;
 
-  useEffect(() => {
-    async function fetchProducts() {
-      try {
-        const params: Record<string, string | number> = {
-          page,
-          limit,
-        };
-        if (category && category.toLowerCase() !== "all categories")
-          params.category = category.toLowerCase();
-        if (search) params.search = search.toLowerCase();
+  const cookie = document.cookie;
+  const client = buildClient(cookie);
 
-        const resProducts = await axios.get(
-          `https://product-service-fsp5.onrender.com/api/products`,
-          { params, withCredentials: true }
+  async function fetchProducts() {
+    try {
+      const params: Record<string, string | number> = {
+        page,
+        limit,
+      };
+      if (category && category.toLowerCase() !== "all categories")
+        params.category = category.toLowerCase();
+      if (search) params.search = search.toLowerCase();
+
+      const resProducts = await client.get(
+        `https://product-service-fsp5.onrender.com/api/products`,
+        { params }
+      );
+      let allProducts = resProducts.data.products;
+      let total = resProducts.data.totalPages;
+
+      if (showPurchased && userId) {
+        const resOrders = await client.get(
+          `https://soundio-nfng.onrender.com/api/orders/users/${userId}`
         );
-        let allProducts = resProducts.data.products;
-        let total = resProducts.data.totalPages;
-
-        if (showPurchased && userId) {
-          const resOrders = await axios.get(
-            `https://soundio-nfng.onrender.com/api/orders/users/${userId}`,
-            { withCredentials: true }
-          );
-          const purchasedIds = resOrders.data.map(
-            (order: { product: Product }) => order.product.id
-          );
-          allProducts = allProducts.filter((product: Product) =>
-            purchasedIds.includes(product.id)
-          );
-          total = 1;
-        }
-
-        setProducts(allProducts);
-        setTotalPages(total);
-      } catch (error) {
-        console.error("Error fetching products:", error);
+        const purchasedIds = resOrders.data.map(
+          (order: { product: Product }) => order.product.id
+        );
+        allProducts = allProducts.filter((product: Product) =>
+          purchasedIds.includes(product.id)
+        );
+        total = 1;
       }
+
+      setProducts(allProducts);
+      setTotalPages(total);
+    } catch (error) {
+      console.error("Error fetching products:", error);
     }
+  }
+
+  useEffect(() => {
     fetchProducts();
   }, [category, search, showPurchased, page, userId]);
 

@@ -1,5 +1,7 @@
 import Products from "@/components/products/Products";
 
-export default async function ProductsPage() {
+const ProductsPage = () => {
   return <Products />;
-}
+};
+
+export default ProductsPage;

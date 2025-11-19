@@ -3,7 +3,7 @@ import ProductPage from "@/components/products/ProductPage";
 import { CurrentUser } from "@/types/types";
 import { cookies } from "next/headers";
 
-export default async function Home({ params }: { params: { id: string } }) {
+const Product = async ({ params }: { params: { id: string } }) => {
   const { id } = await params;
   const cookieStore = await cookies();
   const sessionCookie = cookieStore.get("session")?.value;
@@ -14,8 +14,7 @@ export default async function Home({ params }: { params: { id: string } }) {
 
   try {
     const userRes = await client.get(
-      `https://soundio.onrender.com/api/users/currentuser`,
-      { withCredentials: true }
+      `https://soundio.onrender.com/api/users/currentuser`
     );
     currentUser = userRes.data.currentUser;
 
@@ -36,4 +35,6 @@ export default async function Home({ params }: { params: { id: string } }) {
       />
     </div>
   );
-}
+};
+
+export default Product;

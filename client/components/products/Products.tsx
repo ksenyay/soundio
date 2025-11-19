@@ -14,8 +14,7 @@ const Products = async () => {
     try {
       const client = buildClient(sessionCookie);
       const { data } = await client.get(
-        `https://soundio.onrender.com/api/users/currentuser`,
-        { withCredentials: true }
+        `https://soundio.onrender.com/api/users/currentuser`
       );
       userId = data?.currentUser?.id || null;
     } catch (error) {

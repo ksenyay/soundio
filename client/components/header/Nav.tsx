@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import ProfileDropdown from "./ProfileDropdown";
 import { Search } from "lucide-react";
 import { CurrentUser } from "@/types/types";
-import axios from "axios";
+import { buildClient } from "@/api/buildClient";
 
 const Nav = () => {
   const [search, setSearch] = useState("");
@@ -21,11 +21,13 @@ const Nav = () => {
     undefined
   );
 
+  const cookie = document.cookie;
+  const client = buildClient(cookie);
+
   async function fetchCurrentUser() {
     try {
-      const response = await axios.get(
-        `https://soundio.onrender.com/api/users/currentuser`,
-        { withCredentials: true }
+      const response = await client.get(
+        `https://soundio.onrender.com/api/users/currentuser`
       );
       setCurrentUser(response.data.currentUser);
     } catch (error) {
@@ -35,11 +37,7 @@ const Nav = () => {
   }
 
   async function signout() {
-    await axios.post(
-      `https://soundio.onrender.com/api/users/signout`,
-      {},
-      { withCredentials: true }
-    );
+    await client.post(`https://soundio.onrender.com/api/users/signout`, {});
     await fetchCurrentUser();
   }
 

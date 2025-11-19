@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
 import { Download, Play, Square } from "lucide-react";
-import axios from "axios";
+import { buildClient } from "@/api/buildClient";
 
 const AudioPlayer = ({
   product,
@@ -17,10 +17,9 @@ const AudioPlayer = ({
   const [timeLeft, setTimeLeft] = useState<number>(
     isPurchased ? parseDuration(product.duration) : previewLimit
   );
-  // Ensure timeLeft is reset when isPurchased or product.duration changes
-  React.useEffect(() => {
-    setTimeLeft(isPurchased ? parseDuration(product.duration) : previewLimit);
-  }, [isPurchased, product.duration]);
+
+  const cookie = document.cookie;
+  const client = buildClient(cookie);
 
   const audioRef = useRef<HTMLAudioElement>(null);
 
@@ -73,10 +72,9 @@ const AudioPlayer = ({
 
   async function updateDownloadCount(id: string) {
     try {
-      await axios.patch(
+      await client.patch(
         `${process.env.NEXT_PUBLIC_PRODUCT_URL}/api/products/downloads/${id}`,
-        {},
-        { withCredentials: true }
+        {}
       );
     } catch (error) {
       console.log(error);
@@ -100,6 +98,10 @@ const AudioPlayer = ({
       console.error("Download failed:", error);
     }
   }
+
+  useEffect(() => {
+    setTimeLeft(isPurchased ? parseDuration(product.duration) : previewLimit);
+  }, [isPurchased, product.duration]);
 
   return (
     <div className="bg-white/5 rounded-2xl p-6 border border-white/10">

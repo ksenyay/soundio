@@ -15,27 +15,27 @@ declare global {
   namespace Express {
     interface Request {
       currentUser?: UserPayload;
-      session?: {
-        jwt?: string;
-        [key: string]: any;
-      };
     }
   }
 }
 
 @Injectable()
 export class CurrentUserMiddleware implements NestMiddleware {
-  use(req: Request, res: Response, next: NextFunction) {
-    if (!req.session?.jwt) {
+  use(req: Request, next: NextFunction) {
+    let token: string | undefined;
+
+    if (req.headers.authorization?.startsWith('Bearer ')) {
+      token = req.headers.authorization.split(' ')[1];
+    }
+
+    console.log(token);
+
+    if (!token) {
       return next();
     }
 
     try {
-      const payload = jwt.verify(
-        req.session.jwt,
-        process.env.JWT_SECRET!,
-      ) as UserPayload;
-
+      const payload = jwt.verify(token, process.env.JWT_SECRET!) as UserPayload;
       req.currentUser = payload;
     } catch (err) {}
 

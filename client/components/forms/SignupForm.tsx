@@ -19,6 +19,8 @@ const SignupForm = () => {
     agreeToTerms: false,
   });
 
+  const cookie = document.cookie;
+
   const { makeRequest, errors } = useRequest({
     url: `https://soundio.onrender.com/api/users/signup`,
     method: "post",
@@ -27,7 +29,7 @@ const SignupForm = () => {
       email: formData.email,
       password: formData.password,
     },
-    withCredentials: true,
+    sessionCookie: cookie,
   });
 
   async function submitForm(e: React.FormEvent) {

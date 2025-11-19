@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+import { buildClient } from "@/api/buildClient";
 
 interface Product {
   id: string;
@@ -23,14 +23,13 @@ const Checkout = ({ id, email }: { id: string; email: string }) => {
   const router = useRouter();
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(false);
+  const cookie = document.cookie;
+  const client = buildClient(cookie);
 
   async function fetchOrder() {
     try {
-      const res = await axios.get(
-        `https://soundio-nfng.onrender.com/api/orders/${id}`,
-        {
-          withCredentials: true,
-        }
+      const res = await client.get(
+        `https://soundio-nfng.onrender.com/api/orders/${id}`
       );
       setOrder(res.data);
     } catch (err) {
@@ -39,10 +38,9 @@ const Checkout = ({ id, email }: { id: string; email: string }) => {
   }
 
   async function cancelOrder() {
-    await axios.patch(
+    await client.patch(
       `https://soundio-nfng.onrender.com/api/orders/${id}`,
-      {},
-      { withCredentials: true }
+      {}
     );
     router.back();
   }
@@ -51,13 +49,12 @@ const Checkout = ({ id, email }: { id: string; email: string }) => {
     if (!order) return;
     try {
       setLoading(true);
-      const res = await axios.post(
+      const res = await client.post(
         `https://payment-service-itru.onrender.com/api/payments/checkout`,
         {
           orderId: order.id,
           email,
-        },
-        { withCredentials: true }
+        }
       );
       window.location.href = res.data.url;
     } catch (error) {

@@ -3,15 +3,18 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { Product } from "@/types/types";
-import axios from "axios";
 import { useRouter } from "next/navigation";
+import { buildClient } from "@/api/buildClient";
 
 const Profile = ({ products }: { products: Product[] }) => {
   const [productList, setProductList] = useState(products);
   const router = useRouter();
 
+  const cookie = document.cookie;
+  const client = buildClient(cookie);
+
   async function handleDelete(id: string) {
-    await axios.delete(
+    await client.delete(
       `https://product-service-fsp5.onrender.com/api/products/${id}`,
       {
         withCredentials: true,

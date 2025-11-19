@@ -1,8 +1,16 @@
-import { Body, Controller, Get, HttpCode, Post, Req } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  Post,
+  Req,
+  Res,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './dto';
 import { LoginUserDto } from './dto';
-import type { Request } from 'express';
+import type { Request, Response } from 'express';
 
 @Controller('api/users')
 export class AuthController {
@@ -16,19 +24,25 @@ export class AuthController {
 
   @Post('signup')
   @HttpCode(201)
-  signup(@Body() createUserDto: CreateUserDto, @Req() req: Request) {
-    return this.authService.signup(createUserDto, req);
+  async signup(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
+    const { token, user } = await this.authService.signup(createUserDto);
+
+    res.setHeader('Authorization', `Bearer ${token}`);
+    return user;
   }
 
   @Post('signin')
   @HttpCode(200)
-  signin(@Body() loginUserDto: LoginUserDto, @Req() req: Request) {
-    return this.authService.signin(loginUserDto, req);
+  async signin(@Body() loginUserDto: LoginUserDto, @Res() res: Response) {
+    const { token, user } = await this.authService.signin(loginUserDto);
+
+    res.setHeader('Authorization', `Bearer ${token}`);
+    return user;
   }
 
-  @Post('signout')
-  @HttpCode(200)
-  signout(@Req() req: Request) {
-    return this.authService.signout(req);
-  }
+  // @Post('signout')
+  // @HttpCode(200)
+  // signout(@Req() req: Request) {
+  //   return this.authService.signout(req);
+  // }
 }

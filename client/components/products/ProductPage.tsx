@@ -13,7 +13,8 @@ import {
 import { BarChart3 } from "lucide-react";
 import AudioPlayer from "./AudioPlayer";
 import Sidebar from "./Sidebar";
-import axios from "axios";
+
+import { buildClient } from "@/api/buildClient";
 
 type ProductPageProps = {
   id: string;
@@ -41,12 +42,14 @@ const ProductPage = ({ id, isLoggedIn, userId }: ProductPageProps) => {
   const [product, setProduct] = useState<Product | null>(null);
   const [isPurchased, setIsPurchased] = useState(false);
 
+  const cookie = document.cookie;
+  const client = buildClient(cookie);
+
   async function fetchData() {
     try {
       if (!product) {
-        const response = await axios.get(
-          `https://product-service-fsp5.onrender.com/api/products/${id}`,
-          { withCredentials: true }
+        const response = await client.get(
+          `https://product-service-fsp5.onrender.com/api/products/${id}`
         );
         setProduct(response.data);
         return;
@@ -57,9 +60,8 @@ const ProductPage = ({ id, isLoggedIn, userId }: ProductPageProps) => {
           setIsPurchased(true);
           return;
         }
-        const res = await axios.get(
-          `https://soundio-nfng.onrender.com/api/orders/users/${userId}`,
-          { withCredentials: true }
+        const res = await client.get(
+          `https://soundio-nfng.onrender.com/api/orders/users/${userId}`
         );
         const userProducts = res.data;
         setIsPurchased(

@@ -5,6 +5,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import ErrorMessage from "../ErrorMessage";
 import useRequest from "../../hooks/sendRequest";
+import { buildClient } from "@/api/buildClient";
 
 const categories = [
   "nature",
@@ -24,6 +25,8 @@ const CreateSoundForm = () => {
     tags: "",
   });
 
+  const cookie = document.cookie;
+
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [soundFile, setSoundFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -32,7 +35,7 @@ const CreateSoundForm = () => {
     url: `https://product-service-fsp5.onrender.com/api/products`,
     method: "post",
     isFormData: true,
-    withCredentials: true,
+    sessionCookie: cookie,
   });
 
   function handleChange(
