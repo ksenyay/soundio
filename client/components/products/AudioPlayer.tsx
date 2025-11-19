@@ -72,7 +72,7 @@ const AudioPlayer = ({
   async function updateDownloadCount(id: string) {
     try {
       await client.patch(
-        `${process.env.NEXT_PUBLIC_PRODUCT_URL}/api/products/downloads/${id}`,
+        `https://product-service-fsp5.onrender.com/api/products/downloads/${id}`,
         {}
       );
     } catch (error) {
