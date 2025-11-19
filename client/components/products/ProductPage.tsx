@@ -16,12 +16,7 @@ import Sidebar from "./Sidebar";
 
 import { buildClient } from "@/api/buildClient";
 import Spinner from "./Spinner";
-
-type ProductPageProps = {
-  id: string;
-  isLoggedIn: boolean;
-  userId: string | null;
-};
+import { CurrentUser } from "@/types/types";
 
 type Product = {
   id: string;
@@ -39,14 +34,17 @@ type Product = {
   userId: string;
 };
 
-const ProductPage = ({ id, isLoggedIn, userId }: ProductPageProps) => {
+const ProductPage = ({ id }: { id: string }) => {
   const [product, setProduct] = useState<Product | null>(null);
   const [isPurchased, setIsPurchased] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const client = buildClient();
 
   async function fetchData() {
     try {
+      const currentUser = await checkAuth();
+
       if (!product) {
         const response = await client.get(
           `https://product-service-fsp5.onrender.com/api/products/${id}`
@@ -55,13 +53,13 @@ const ProductPage = ({ id, isLoggedIn, userId }: ProductPageProps) => {
         return;
       }
 
-      if (userId && product) {
-        if (userId === product.userId) {
+      if (currentUser?.id && product) {
+        if (currentUser?.id === product.userId) {
           setIsPurchased(true);
           return;
         }
         const res = await client.get(
-          `https://soundio-nfng.onrender.com/api/orders/users/${userId}`
+          `https://soundio-nfng.onrender.com/api/orders/users/${currentUser?.id}`
         );
         const userProducts = res.data;
         setIsPurchased(
@@ -75,9 +73,33 @@ const ProductPage = ({ id, isLoggedIn, userId }: ProductPageProps) => {
     }
   }
 
+  async function checkAuth() {
+    const client = buildClient();
+
+    let currentUser: CurrentUser | null = null;
+
+    try {
+      const userRes = await client.get(
+        `https://soundio.onrender.com/api/users/currentuser`
+      );
+      currentUser = userRes.data.currentUser;
+
+      if (currentUser) {
+        setIsLoggedIn(true);
+        return currentUser;
+      } else {
+        setIsLoggedIn(false);
+        return undefined;
+      }
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      currentUser = null;
+    }
+  }
+
   useEffect(() => {
     fetchData();
-  }, [userId, id, product]);
+  }, [id, product]);
 
   if (!product) {
     return <Spinner />;

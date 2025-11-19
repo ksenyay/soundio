@@ -19,6 +19,7 @@ const SignupForm = () => {
     password: "",
     agreeToTerms: false,
   });
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const { makeRequest, errors } = useRequest({
@@ -37,14 +38,14 @@ const SignupForm = () => {
       alert("Please agree to terms and conditions");
       return;
     }
+    setIsLoading(true);
     const res = await makeRequest();
-
     const token = res?.data.token;
-
     if (token) {
       localStorage.setItem("jwt", token);
       router.push("/");
     }
+    setIsLoading(false);
   }
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -186,9 +187,25 @@ const SignupForm = () => {
           {/* Submit Button */}
           <Button
             type="submit"
-            disabled={!formData.agreeToTerms}
-            className="w-full h-10.5 bg-primary hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed font-semibold text-white rounded-xl transition-all duration-200"
+            disabled={!formData.agreeToTerms || isLoading}
+            className="w-full h-10.5 bg-primary hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed font-semibold text-white rounded-xl transition-all duration-200 flex items-center justify-center"
           >
+            {isLoading && (
+              <svg
+                className="animate-spin h-5 w-5 text-white mr-2"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                  fill="none"
+                />
+              </svg>
+            )}
             Create Account
           </Button>
 

@@ -14,6 +14,7 @@ const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const { makeRequest, errors } = useRequest({
@@ -27,15 +28,14 @@ const LoginForm = () => {
 
   async function submitForm(e: React.FormEvent) {
     e.preventDefault();
-
+    setIsLoading(true);
     const res = await makeRequest();
-
     const token = res?.data.token;
-
     if (token) {
       localStorage.setItem("jwt", token);
       router.push("/");
     }
+    setIsLoading(false);
   }
 
   return (
@@ -103,8 +103,25 @@ const LoginForm = () => {
           <Button
             type="submit"
             variant="default"
-            className="w-full font-semibold h-10.5 rounded-xl bg-primary hover:bg-primary/90 transition-all duration-200"
+            className="w-full font-semibold h-10.5 rounded-xl bg-primary hover:bg-primary/90 transition-all duration-200 flex items-center justify-center"
+            disabled={isLoading}
           >
+            {isLoading && (
+              <svg
+                className="animate-spin h-5 w-5 text-white mr-2"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                  fill="none"
+                />
+              </svg>
+            )}
             Login
           </Button>
 

@@ -25,8 +25,11 @@ const Sidebar = ({
 
   const client = buildClient();
 
+  const [isLoading, setIsLoading] = React.useState(false);
+
   async function handlePurchase(id: string) {
     if (isLoggedIn) {
+      setIsLoading(true);
       const order = await client.post(
         `https://soundio-nfng.onrender.com/api/orders`,
         {
@@ -38,6 +41,7 @@ const Sidebar = ({
       if (order) {
         router.push(`/checkout/${order.data.id}`);
       }
+      setIsLoading(false);
     } else {
       router.push("/auth/login");
     }
@@ -98,10 +102,26 @@ const Sidebar = ({
 
           {/* Purchase Button */}
           <Button
-            className="w-full bg-primary hover:bg-primary/90 font-semibold py-3 rounded-xl transition-all duration-200 hover:scale-102"
+            className="w-full bg-primary hover:bg-primary/90 font-semibold py-3 rounded-xl transition-all duration-200 hover:scale-102 flex items-center justify-center"
             onClick={() => handlePurchase(product.id)}
-            disabled={isPurchased}
+            disabled={isPurchased || isLoading}
           >
+            {isLoading && (
+              <svg
+                className="animate-spin h-5 w-5 text-white mr-2"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                  fill="none"
+                />
+              </svg>
+            )}
             {isPurchased ? "In Library" : "Purchase"}
           </Button>
 

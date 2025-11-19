@@ -177,8 +177,24 @@ const CreateSoundForm = () => {
           <Button
             type="submit"
             disabled={isLoading}
-            className="w-full h-10.5 bg-primary hover:bg-primary/90 font-semibold text-white rounded-xl transition-all duration-200"
+            className="w-full h-10.5 bg-primary hover:bg-primary/90 font-semibold text-white rounded-xl transition-all duration-200 flex items-center justify-center"
           >
+            {isLoading && (
+              <svg
+                className="animate-spin h-5 w-5 text-white mr-2"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                  fill="none"
+                />
+              </svg>
+            )}
             Create Sound
           </Button>
         </form>
