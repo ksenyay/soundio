@@ -13,7 +13,15 @@ import {
 import { BarChart3 } from "lucide-react";
 import AudioPlayer from "./AudioPlayer";
 import Sidebar from "./Sidebar";
+
 import { buildClient } from "@/api/buildClient";
+import Spinner from "./Spinner";
+
+type ProductPageProps = {
+  id: string;
+  isLoggedIn: boolean;
+  userId: string | null;
+};
 
 type Product = {
   id: string;
@@ -31,84 +39,49 @@ type Product = {
   userId: string;
 };
 
-const ProductPage = ({ id }: { id: string }) => {
+const ProductPage = ({ id, isLoggedIn, userId }: ProductPageProps) => {
   const [product, setProduct] = useState<Product | null>(null);
   const [isPurchased, setIsPurchased] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const client = buildClient();
 
-  const checkAuth = async () => {
+  async function fetchData() {
     try {
-      const userRes = await client.get(
-        `https://soundio.onrender.com/api/users/currentuser`
-      );
-
-      const currentUser = userRes.data.currentUser;
-
-      if (currentUser) {
-        setIsLoggedIn(true);
-        return currentUser;
-      }
-
-      setIsLoggedIn(false);
-      return null;
-    } catch (error) {
-      console.error("Error fetching user:", error);
-      setIsLoggedIn(false);
-      return null;
-    }
-  };
-
-  const fetchProduct = async () => {
-    try {
-      const response = await client.get(
-        `https://product-service-fsp5.onrender.com/api/products/${id}`
-      );
-      setProduct(response.data);
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching product:", error);
-      return null;
-    }
-  };
-
-  const checkPurchaseStatus = async (userId: string, product: Product) => {
-    try {
-      if (userId === product.userId) {
-        setIsPurchased(true);
+      if (!product) {
+        const response = await client.get(
+          `https://product-service-fsp5.onrender.com/api/products/${id}`
+        );
+        setProduct(response.data);
         return;
       }
 
-      const res = await client.get(
-        `https://soundio-nfng.onrender.com/api/orders/users/${userId}`
-      );
-
-      const userProducts = res.data;
-      const purchased = userProducts.some(
-        (order: { product: { id: string } }) => order.product.id === product.id
-      );
-
-      setIsPurchased(purchased);
+      if (userId && product) {
+        if (userId === product.userId) {
+          setIsPurchased(true);
+          return;
+        }
+        const res = await client.get(
+          `https://soundio-nfng.onrender.com/api/orders/users/${userId}`
+        );
+        const userProducts = res.data;
+        setIsPurchased(
+          userProducts.some(
+            (order: { product: { id: string } }) => order.product.id === id
+          )
+        );
+      }
     } catch (error) {
-      console.error("Error checking purchase:", error);
+      console.error("Error fetching data:", error);
     }
-  };
+  }
 
   useEffect(() => {
-    const load = async () => {
-      const currentUser = await checkAuth();
-      const fetchedProduct = await fetchProduct();
+    fetchData();
+  }, [userId, id, product]);
 
-      if (currentUser && fetchedProduct) {
-        await checkPurchaseStatus(currentUser.userId, fetchedProduct);
-      }
-    };
-
-    load();
-  }, [id]);
-
-  if (!product) return <div></div>;
+  if (!product) {
+    return <Spinner />;
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">

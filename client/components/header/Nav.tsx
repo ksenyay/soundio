@@ -40,7 +40,7 @@ const Nav = () => {
 
     await fetchCurrentUser();
 
-    router.refresh();
+    router.push("/");
   }
 
   function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {

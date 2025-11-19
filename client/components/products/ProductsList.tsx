@@ -6,6 +6,7 @@ import Pagination from "./Pagination";
 import { useSearchParams } from "next/navigation";
 import { Product } from "@/types/types";
 import { buildClient } from "@/api/buildClient";
+import Spinner from "./Spinner";
 
 type ProductsListProps = {
   userId: string | null;
@@ -13,6 +14,7 @@ type ProductsListProps = {
 
 const ProductsList = ({ userId }: ProductsListProps) => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(1);
 
   const searchParams = useSearchParams();
@@ -26,6 +28,7 @@ const ProductsList = ({ userId }: ProductsListProps) => {
 
   async function fetchProducts() {
     try {
+      setLoading(true);
       const params: Record<string, string | number> = {
         page,
         limit,
@@ -56,14 +59,18 @@ const ProductsList = ({ userId }: ProductsListProps) => {
 
       setProducts(allProducts);
       setTotalPages(total);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching products:", error);
+      setLoading(false);
     }
   }
 
   useEffect(() => {
     fetchProducts();
   }, [category, search, showPurchased, page, userId]);
+
+  if (loading) return <Spinner />;
 
   return (
     <>
