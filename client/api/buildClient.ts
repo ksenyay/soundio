@@ -1,12 +1,12 @@
 import axios from "axios";
 
-export const buildClient = (sessionCookie?: string) => {
-  if (!sessionCookie && typeof document !== "undefined") {
-    sessionCookie = document.cookie;
+export const buildClient = (jwtToken?: string) => {
+  if (!jwtToken && typeof window !== "undefined") {
+    jwtToken = localStorage.getItem("jwt") || "";
   }
   return axios.create({
     headers: {
-      cookie: sessionCookie ? `session=${sessionCookie}` : "",
+      Authorization: jwtToken ? `Bearer ${jwtToken}` : "",
     },
   });
 };

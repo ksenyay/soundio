@@ -36,7 +36,7 @@ const Nav = () => {
   }
 
   async function signout() {
-    await client.post(`https://soundio.onrender.com/api/users/signout`, {});
+    localStorage.removeItem("jwt");
     await fetchCurrentUser();
   }
 

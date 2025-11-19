@@ -1,7 +1,6 @@
 import React from "react";
 import Checkout from "@/components/products/Checkout";
 import { CurrentUser } from "@/types/types";
-import { cookies } from "next/headers";
 import { buildClient } from "@/api/buildClient";
 
 const CheckoutPage = async ({
@@ -10,9 +9,8 @@ const CheckoutPage = async ({
   params: Promise<{ id: string }>;
 }) => {
   const { id } = await params;
-  const cookieStore = await cookies();
-  const sessionCookie = cookieStore.get("session")?.value;
-  const client = buildClient(sessionCookie);
+
+  const client = buildClient();
 
   let currentUser: CurrentUser | null = null;
 

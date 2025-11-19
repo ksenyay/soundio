@@ -19,11 +19,6 @@ const SignupForm = () => {
     agreeToTerms: false,
   });
 
-  let cookie = "";
-  if (typeof document !== "undefined") {
-    cookie = document.cookie;
-  }
-
   const { makeRequest, errors } = useRequest({
     url: `https://soundio.onrender.com/api/users/signup`,
     method: "post",
@@ -32,7 +27,6 @@ const SignupForm = () => {
       email: formData.email,
       password: formData.password,
     },
-    sessionCookie: cookie,
   });
 
   async function submitForm(e: React.FormEvent) {
@@ -41,7 +35,12 @@ const SignupForm = () => {
       alert("Please agree to terms and conditions");
       return;
     }
-    makeRequest();
+    const res = await makeRequest();
+
+    const token = res?.headers["authorization"]?.replace("Bearer ", "");
+    if (token) {
+      localStorage.setItem("jwt", token);
+    }
   }
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {

@@ -5,21 +5,16 @@ import { buildClient } from "@/api/buildClient";
 import ProductsList from "./ProductsList";
 
 const Products = async () => {
-  const cookieStore = await cookies();
-  const sessionCookie = cookieStore.get("session")?.value;
-
   let userId: string | null = null;
 
-  if (sessionCookie) {
-    try {
-      const client = buildClient(sessionCookie);
-      const { data } = await client.get(
-        `https://soundio.onrender.com/api/users/currentuser`
-      );
-      userId = data?.currentUser?.id || null;
-    } catch (error) {
-      console.error("Error fetching user:", error);
-    }
+  try {
+    const client = buildClient();
+    const { data } = await client.get(
+      `https://soundio.onrender.com/api/users/currentuser`
+    );
+    userId = data?.currentUser?.id || null;
+  } catch (error) {
+    console.error("Error fetching user:", error);
   }
 
   return (

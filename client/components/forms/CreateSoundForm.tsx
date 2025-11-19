@@ -24,11 +24,6 @@ const CreateSoundForm = () => {
     tags: "",
   });
 
-  let cookie = "";
-  if (typeof document !== "undefined") {
-    cookie = document.cookie;
-  }
-
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [soundFile, setSoundFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -37,7 +32,6 @@ const CreateSoundForm = () => {
     url: `https://product-service-fsp5.onrender.com/api/products`,
     method: "post",
     isFormData: true,
-    sessionCookie: cookie,
   });
 
   function handleChange(

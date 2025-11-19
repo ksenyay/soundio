@@ -8,16 +8,9 @@ interface RequestOptions {
   method: "get" | "post" | "put" | "delete" | "patch";
   body?: unknown;
   isFormData?: boolean;
-  sessionCookie?: string;
 }
 
-export default ({
-  url,
-  method,
-  body,
-  isFormData = false,
-  sessionCookie,
-}: RequestOptions) => {
+export default ({ url, method, body, isFormData = false }: RequestOptions) => {
   const [errors, setErrors] = useState<string[]>([]);
   const router = useRouter();
 
@@ -29,8 +22,11 @@ export default ({
         ? { "Content-Type": "multipart/form-data" }
         : { "Content-Type": "application/json" };
 
-      if (sessionCookie) {
-        headers["cookie"] = `session=${sessionCookie}`;
+      if (typeof window !== "undefined") {
+        const jwtToken = localStorage.getItem("jwt");
+        if (jwtToken) {
+          headers["Authorization"] = `Bearer ${jwtToken}`;
+        }
       }
 
       const response = await axios({
@@ -42,6 +38,8 @@ export default ({
 
       console.log("Success:", response.data);
       router.push("/");
+
+      return response;
     } catch (err) {
       const error = err as AxiosError<{ message: string | string[] }>;
       const message = error.response?.data?.message;

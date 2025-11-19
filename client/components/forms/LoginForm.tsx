@@ -13,10 +13,6 @@ const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  let cookie = "";
-  if (typeof document !== "undefined") {
-    cookie = document.cookie;
-  }
 
   const { makeRequest, errors } = useRequest({
     url: `https://soundio.onrender.com/api/users/signin`,
@@ -25,12 +21,17 @@ const LoginForm = () => {
       email,
       password,
     },
-    sessionCookie: cookie,
   });
 
   async function submitForm(e: React.FormEvent) {
     e.preventDefault();
-    await makeRequest();
+
+    const res = await makeRequest();
+
+    const token = res?.headers["authorization"]?.replace("Bearer ", "");
+    if (token) {
+      localStorage.setItem("jwt", token);
+    }
   }
 
   return (
