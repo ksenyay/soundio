@@ -18,8 +18,7 @@ const AudioPlayer = ({
     isPurchased ? parseDuration(product.duration) : previewLimit
   );
 
-  const cookie = document.cookie;
-  const client = buildClient(cookie);
+  const client = buildClient();
 
   const audioRef = useRef<HTMLAudioElement>(null);
 

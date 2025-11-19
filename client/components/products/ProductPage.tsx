@@ -42,8 +42,7 @@ const ProductPage = ({ id, isLoggedIn, userId }: ProductPageProps) => {
   const [product, setProduct] = useState<Product | null>(null);
   const [isPurchased, setIsPurchased] = useState(false);
 
-  const cookie = document.cookie;
-  const client = buildClient(cookie);
+  const client = buildClient();
 
   async function fetchData() {
     try {

@@ -23,8 +23,8 @@ const Checkout = ({ id, email }: { id: string; email: string }) => {
   const router = useRouter();
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(false);
-  const cookie = document.cookie;
-  const client = buildClient(cookie);
+
+  const client = buildClient();
 
   async function fetchOrder() {
     try {

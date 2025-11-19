@@ -10,8 +10,8 @@ const ProfilePage = () => {
   const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
   const router = useRouter();
-  const cookie = document.cookie;
-  const client = buildClient(cookie);
+
+  const client = buildClient();
 
   async function fetchData() {
     try {

@@ -10,8 +10,7 @@ const Profile = ({ products }: { products: Product[] }) => {
   const [productList, setProductList] = useState(products);
   const router = useRouter();
 
-  const cookie = document.cookie;
-  const client = buildClient(cookie);
+  const client = buildClient();
 
   async function handleDelete(id: string) {
     await client.delete(

@@ -24,7 +24,10 @@ const CreateSoundForm = () => {
     tags: "",
   });
 
-  const cookie = document.cookie;
+  let cookie = "";
+  if (typeof document !== "undefined") {
+    cookie = document.cookie;
+  }
 
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [soundFile, setSoundFile] = useState<File | null>(null);

@@ -19,7 +19,10 @@ const SignupForm = () => {
     agreeToTerms: false,
   });
 
-  const cookie = document.cookie;
+  let cookie = "";
+  if (typeof document !== "undefined") {
+    cookie = document.cookie;
+  }
 
   const { makeRequest, errors } = useRequest({
     url: `https://soundio.onrender.com/api/users/signup`,

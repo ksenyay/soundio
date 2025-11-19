@@ -8,8 +8,8 @@ import { buildClient } from "@/api/buildClient";
 const New = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const router = useRouter();
-  const cookie = document.cookie;
-  const client = buildClient(cookie);
+
+  const client = buildClient();
 
   async function fetchCurrentUser() {
     try {

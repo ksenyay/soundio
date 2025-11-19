@@ -9,12 +9,8 @@ const SuccessPage = () => {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get("session_id");
   const [productId, setProductId] = useState();
-  let cookie;
-  if (typeof document !== "undefined") {
-    cookie = document.cookie;
-  }
 
-  const client = buildClient(cookie);
+  const client = buildClient();
 
   async function handleSuccessCase() {
     console.log(sessionId);

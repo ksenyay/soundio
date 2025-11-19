@@ -13,7 +13,10 @@ const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const cookie = document.cookie;
+  let cookie = "";
+  if (typeof document !== "undefined") {
+    cookie = document.cookie;
+  }
 
   const { makeRequest, errors } = useRequest({
     url: `https://soundio.onrender.com/api/users/signin`,

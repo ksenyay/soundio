@@ -22,8 +22,7 @@ const ProductsList = ({ userId }: ProductsListProps) => {
   const page = Number(searchParams.get("page")) || 1;
   const limit = 8;
 
-  const cookie = document.cookie;
-  const client = buildClient(cookie);
+  const client = buildClient();
 
   async function fetchProducts() {
     try {
