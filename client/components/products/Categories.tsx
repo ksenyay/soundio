@@ -78,7 +78,7 @@ const Categories = ({ isUser }: { isUser: boolean }) => {
             checked={showPurchased}
             onCheckedChange={handleShowPurchasedChange}
             className="mt-0.5"
-            disabled={isUser}
+            disabled={!isUser}
           />
           <label
             htmlFor="terms"
