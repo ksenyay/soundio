@@ -43,8 +43,8 @@ export class PaymentsService {
       customer_email: email,
       client_reference_id: order.id,
       metadata: { orderId: order.id },
-      success_url: `https://soundio.vercel.app/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `https://soundio.vercel.app/checkout/cancel`,
+      success_url: `https://soundio-1.onrender.com/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `https://soundio-1.onrender.com/checkout/cancel`,
     });
 
     return { url: session.url };
