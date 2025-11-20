@@ -8,11 +8,7 @@ import { Product } from "@/types/types";
 import { buildClient } from "@/api/buildClient";
 import Spinner from "./Spinner";
 
-type ProductsListProps = {
-  userId: string | null;
-};
-
-const ProductsList = ({ userId }: ProductsListProps) => {
+const ProductsList = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(1);
@@ -26,49 +22,59 @@ const ProductsList = ({ userId }: ProductsListProps) => {
 
   const client = buildClient();
 
-  async function fetchProducts() {
+  const fetchAll = async () => {
     try {
       setLoading(true);
-      const params: Record<string, string | number> = {
-        page,
-        limit,
-      };
+
+      const userReq = client
+        .get("https://soundio.onrender.com/api/users/currentuser")
+        .catch(() => null);
+
+      const params: Record<string, string | number> = { page, limit };
       if (category && category.toLowerCase() !== "all categories")
         params.category = category.toLowerCase();
       if (search) params.search = search.toLowerCase();
 
-      const resProducts = await client.get(
-        `https://product-service-fsp5.onrender.com/api/products`,
+      const productsReq = client.get(
+        "https://product-service-fsp5.onrender.com/api/products",
         { params }
       );
-      let allProducts = resProducts.data.products;
-      let total = resProducts.data.totalPages;
 
-      if (showPurchased && userId) {
-        const resOrders = await client.get(
-          `https://soundio-nfng.onrender.com/api/orders/users/${userId}`
+      const [userRes, productsRes] = await Promise.all([userReq, productsReq]);
+
+      const currentUserId = userRes?.data?.currentUser?.id || null;
+
+      let fetchedProducts = productsRes.data.products;
+      let fetchedTotalPages = productsRes.data.totalPages;
+
+      if (showPurchased && currentUserId) {
+        const ordersRes = await client.get(
+          `https://soundio-nfng.onrender.com/api/orders/users/${currentUserId}`
         );
-        const purchasedIds = resOrders.data.map(
+
+        const purchasedIds = ordersRes.data.map(
           (order: { product: Product }) => order.product.id
         );
-        allProducts = allProducts.filter((product: Product) =>
-          purchasedIds.includes(product.id)
+
+        fetchedProducts = fetchedProducts.filter((p: Product) =>
+          purchasedIds.includes(p.id)
         );
-        total = 1;
+
+        fetchedTotalPages = 1;
       }
 
-      setProducts(allProducts);
-      setTotalPages(total);
-      setLoading(false);
+      setProducts(fetchedProducts);
+      setTotalPages(fetchedTotalPages);
     } catch (error) {
-      console.error("Error fetching products:", error);
+      console.error("Error loading products:", error);
+    } finally {
       setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchProducts();
-  }, [category, search, showPurchased, page, userId]);
+    fetchAll();
+  }, [category, search, showPurchased, page]);
 
   if (loading) return <Spinner />;
 

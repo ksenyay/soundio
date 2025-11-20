@@ -5,17 +5,17 @@ import { buildClient } from "@/api/buildClient";
 import ProductsList from "./ProductsList";
 
 const Products = async () => {
-  let userId: string | null = null;
+  // let userId: string | null = null;
 
-  try {
-    const client = buildClient();
-    const { data } = await client.get(
-      `https://soundio.onrender.com/api/users/currentuser`
-    );
-    userId = data?.currentUser?.id || null;
-  } catch (error) {
-    console.error("Error fetching user:", error);
-  }
+  // try {
+  //   const client = buildClient();
+  //   const { data } = await client.get(
+  //     `https://soundio.onrender.com/api/users/currentuser`
+  //   );
+  //   userId = data?.currentUser?.id || null;
+  // } catch (error) {
+  //   console.error("Error fetching user:", error);
+  // }
 
   return (
     <div className="w-full px-4 md:px-6 lg:px-8 py-6">
@@ -32,7 +32,7 @@ const Products = async () => {
       <Categories />
 
       {/* Products  */}
-      <ProductsList userId={userId} />
+      <ProductsList />
     </div>
   );
 };
