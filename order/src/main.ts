@@ -25,10 +25,12 @@ async function bootstrap() {
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,
     options: {
-      urls: [process.env.RABBIT_MQ_URL!],
+      urls: [
+        'amqps://ibglnivy:2lagOO2N7brPbJvN03h9_VmqkLMKojNH@kebnekaise.lmq.cloudamqp.com/ibglnivy',
+      ],
       queue: 'product_queue',
       queueOptions: {
-        durable: false,
+        durable: true,
       },
     },
   });
@@ -36,9 +38,11 @@ async function bootstrap() {
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,
     options: {
-      urls: [process.env.RABBIT_MQ_URL!],
+      urls: [
+        'amqps://ibglnivy:2lagOO2N7brPbJvN03h9_VmqkLMKojNH@kebnekaise.lmq.cloudamqp.com/ibglnivy',
+      ],
       queue: 'payment_queue',
-      queueOptions: { durable: false },
+      queueOptions: { durable: true },
     },
   });
 

@@ -28,17 +28,6 @@ const Sidebar = ({
   const [isLoading, setIsLoading] = React.useState(false);
 
   async function handlePurchase(id: string) {
-    if (!isLoggedIn) {
-      router.push("/auth/login");
-      return;
-    }
-
-    const jwt = localStorage.getItem("jwt");
-    if (!jwt) {
-      console.error("No JWT token found!");
-      router.push("/auth/login");
-      return;
-    }
     if (isLoggedIn) {
       setIsLoading(true);
       const order = await client.post(

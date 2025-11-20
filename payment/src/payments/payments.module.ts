@@ -23,10 +23,12 @@ import { PaymentSchema } from '../db/payment.schema';
         name: 'PAYMENT_RABBITMQ_SERVICE',
         transport: Transport.RMQ,
         options: {
-          urls: [process.env.RABBIT_MQ_URL!],
+          urls: [
+            'amqps://ibglnivy:2lagOO2N7brPbJvN03h9_VmqkLMKojNH@kebnekaise.lmq.cloudamqp.com/ibglnivy',
+          ],
           queue: 'payment_queue',
           queueOptions: {
-            durable: false,
+            durable: true,
           },
         },
       },
