@@ -38,9 +38,10 @@ const Nav = () => {
   async function signout() {
     localStorage.removeItem("jwt");
 
-    await fetchCurrentUser();
+    // await fetchCurrentUser();
 
     router.push("/");
+    window.location.reload();
   }
 
   function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {

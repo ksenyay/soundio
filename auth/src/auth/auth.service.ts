@@ -20,6 +20,16 @@ export class AuthService {
   ): Promise<{ token: string; user: UserDocument }> {
     const { username, email, password } = data;
 
+    const existingUsername = await this.user.findOne({ username }).exec();
+    if (existingUsername) {
+      throw new UnauthorizedException('Username already exists');
+    }
+
+    const existingEmail = await this.user.findOne({ email }).exec();
+    if (existingEmail) {
+      throw new UnauthorizedException('Email already exists');
+    }
+
     const hashed = await Password.hash(password);
 
     const newUser = new this.user({ username, email, password: hashed });
