@@ -25,10 +25,12 @@ import { ScheduleModule } from '@nestjs/schedule';
         name: 'ORDER_RABBITMQ_SERVICE',
         transport: Transport.RMQ,
         options: {
-          urls: [process.env.RABBIT_MQ_URL!],
+          urls: [
+            'amqps://ibglnivy:2lagOO2N7brPbJvN03h9_VmqkLMKojNH@kebnekaise.lmq.cloudamqp.com/ibglnivy',
+          ],
           queue: 'order_queue',
           queueOptions: {
-            durable: false,
+            durable: true,
           },
         },
       },
