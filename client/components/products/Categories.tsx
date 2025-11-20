@@ -36,6 +36,7 @@ const Categories = () => {
     }
 
     params.set("page", "1");
+    params.delete("purchased");
 
     router.push(`?${params.toString()}`);
   };
