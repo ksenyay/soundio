@@ -2,15 +2,16 @@
 import { Checkbox } from "../ui/checkbox";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface Category {
   title: string;
   color: string;
 }
 
-const Categories = ({ isUser }: { isUser: boolean }) => {
+const Categories = () => {
   const [showPurchased, setShowPurchased] = useState(false);
+  const [isUser, setIsUser] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -51,6 +52,22 @@ const Categories = ({ isUser }: { isUser: boolean }) => {
     router.push(`?${params.toString()}`);
     setShowPurchased(checked);
   };
+
+  useEffect(() => {
+    async function fetchUser() {
+      try {
+        const { buildClient } = await import("@/api/buildClient");
+        const client = buildClient();
+        const { data } = await client.get(
+          `https://soundio.onrender.com/api/users/currentuser`
+        );
+        setIsUser(!!data?.currentUser?.id);
+      } catch (error) {
+        setIsUser(false);
+      }
+    }
+    fetchUser();
+  }, []);
 
   return (
     <div className="w-full px-4 md:px-6 lg:px-8 py-6">

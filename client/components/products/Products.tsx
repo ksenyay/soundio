@@ -1,22 +1,8 @@
 import React from "react";
 import Categories from "./Categories";
-import { cookies } from "next/headers";
-import { buildClient } from "@/api/buildClient";
 import ProductsList from "./ProductsList";
 
 const Products = async () => {
-  let userId: string | null = null;
-
-  try {
-    const client = buildClient();
-    const { data } = await client.get(
-      `https://soundio.onrender.com/api/users/currentuser`
-    );
-    userId = data?.currentUser?.id || null;
-  } catch (error) {
-    console.error("Error fetching user:", error);
-  }
-
   return (
     <div className="w-full px-4 md:px-6 lg:px-8 py-6">
       {/* Header */}
@@ -29,7 +15,7 @@ const Products = async () => {
       </div>
 
       {/* Categories */}
-      <Categories isUser={!!userId} />
+      <Categories />
 
       {/* Products  */}
       <ProductsList />
