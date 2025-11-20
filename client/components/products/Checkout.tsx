@@ -19,10 +19,15 @@ interface Order {
   product: Product;
 }
 
-const Checkout = ({ id, email }: { id: string; email: string }) => {
+interface CurrentUser {
+  email: string;
+}
+
+const Checkout = ({ id }: { id: string }) => {
   const router = useRouter();
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(false);
+  const [currentUser, setCurrentUser] = useState<CurrentUser | null>();
 
   const client = buildClient();
 
@@ -37,6 +42,18 @@ const Checkout = ({ id, email }: { id: string; email: string }) => {
     }
   }
 
+  async function fetchCurrentUser() {
+    try {
+      const res = await client.get(
+        `https://soundio.onrender.com/api/users/currentuser`
+      );
+      setCurrentUser(res.data.currentUser);
+    } catch (err) {
+      setCurrentUser(null);
+      console.error(err);
+    }
+  }
+
   async function cancelOrder() {
     await client.patch(
       `https://soundio-nfng.onrender.com/api/orders/${id}`,
@@ -46,14 +63,14 @@ const Checkout = ({ id, email }: { id: string; email: string }) => {
   }
 
   async function handleCheckout() {
-    if (!order) return;
+    if (!order || !currentUser) return;
     try {
       setLoading(true);
       const res = await client.post(
         `https://payment-service-itru.onrender.com/api/payments/checkout`,
         {
           orderId: order.id,
-          email,
+          email: currentUser.email,
         }
       );
       window.location.href = res.data.url;
@@ -65,9 +82,10 @@ const Checkout = ({ id, email }: { id: string; email: string }) => {
 
   useEffect(() => {
     fetchOrder();
+    fetchCurrentUser();
   }, [id]);
 
-  if (!order) {
+  if (!order || !currentUser) {
     return (
       <div className="max-w-md mx-auto mt-16 p-8 bg-white/5 rounded-2xl border border-white/10 shadow-lg">
         <p className="text-center text-gray-400">Loading order...</p>
