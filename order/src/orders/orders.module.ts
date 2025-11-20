@@ -39,14 +39,12 @@ import { ScheduleModule } from '@nestjs/schedule';
 })
 export class OrdersModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(CurrentUserMiddleware, RequireAuthMiddleware)
-      .forRoutes(
-        { path: '/api/orders', method: RequestMethod.GET },
-        { path: '/api/orders/:id', method: RequestMethod.GET },
-        { path: '/api/orders', method: RequestMethod.POST },
-        { path: '/api/orders/:id', method: RequestMethod.PATCH },
-        { path: '/api/orders//users/:id', method: RequestMethod.GET },
-      );
+    consumer.apply(CurrentUserMiddleware, RequireAuthMiddleware).forRoutes(
+      { path: '/api/orders', method: RequestMethod.GET },
+      { path: '/api/orders/:id', method: RequestMethod.GET },
+      // { path: '/api/orders', method: RequestMethod.POST },
+      { path: '/api/orders/:id', method: RequestMethod.PATCH },
+      { path: '/api/orders/users/:id', method: RequestMethod.GET },
+    );
   }
 }
