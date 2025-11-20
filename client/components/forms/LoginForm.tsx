@@ -103,26 +103,28 @@ const LoginForm = () => {
           <Button
             type="submit"
             variant="default"
-            className="w-full font-semibold h-10.5 rounded-xl bg-primary hover:bg-primary/90 transition-all duration-200 flex items-center justify-center"
+            className="w-full font-semibold h-10.5 rounded-xl bg-primary hover:bg-primary/90 transition-all duration-200 flex items-center justify-center gap-2"
             disabled={isLoading}
           >
+            Login
             {isLoading && (
               <svg
-                className="animate-spin h-5 w-5 text-white mr-2"
-                viewBox="0 0 24 24"
+                className="animate-spin h-5 w-5 text-white"
+                viewBox="0 0 50 50"
               >
                 <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
+                  cx="25"
+                  cy="25"
+                  r="20"
                   stroke="currentColor"
                   strokeWidth="4"
                   fill="none"
+                  strokeLinecap="round"
+                  strokeDasharray="90"
+                  strokeDashoffset="60"
                 />
               </svg>
             )}
-            Login
           </Button>
 
           <div className="text-center pt-4 border-t border-white/10">

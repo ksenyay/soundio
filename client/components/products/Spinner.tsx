@@ -12,6 +12,8 @@ const Spinner = () => {
           strokeWidth="4"
           fill="none"
           strokeLinecap="round"
+          strokeDasharray="90"
+          strokeDashoffset="60"
         />
       </svg>
     </div>

@@ -102,27 +102,30 @@ const Sidebar = ({
 
           {/* Purchase Button */}
           <Button
-            className="w-full bg-primary hover:bg-primary/90 font-semibold py-3 rounded-xl transition-all duration-200 hover:scale-102 flex items-center justify-center"
+            className="w-full bg-primary hover:bg-primary/90 font-semibold py-3 rounded-xl transition-all duration-200 hover:scale-102 flex items-center justify-center gap-2"
             onClick={() => handlePurchase(product.id)}
             disabled={isPurchased || isLoading}
           >
+            {isPurchased ? "In Library" : "Purchase"}
+
             {isLoading && (
               <svg
-                className="animate-spin h-5 w-5 text-white mr-2"
-                viewBox="0 0 24 24"
+                className="animate-spin h-5 w-5 text-white"
+                viewBox="0 0 50 50"
               >
                 <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
+                  cx="25"
+                  cy="25"
+                  r="20"
                   stroke="currentColor"
                   strokeWidth="4"
                   fill="none"
+                  strokeLinecap="round"
+                  strokeDasharray="90"
+                  strokeDashoffset="60"
                 />
               </svg>
             )}
-            {isPurchased ? "In Library" : "Purchase"}
           </Button>
 
           {/* License Info */}
