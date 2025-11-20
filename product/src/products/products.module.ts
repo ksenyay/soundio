@@ -24,7 +24,7 @@ import { StorageService } from '../storage/storage.service';
         transport: Transport.RMQ,
         options: {
           urls: [
-            'amqps://ibglnivy:2lagOO2N7brPbJvN03h9_VmqkLMKojNH@kebnekaise.lmq.cloudamqp.com/ibglnivy',
+            'amqps://mcbsdwbh:fs1vrrrRs6jBvmgL398xGVujan89w273@kebnekaise.lmq.cloudamqp.com/mcbsdwbh',
           ],
           queue: 'product_queue',
           queueOptions: {
