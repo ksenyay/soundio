@@ -9,7 +9,7 @@ interface Category {
   color: string;
 }
 
-const Categories = () => {
+const Categories = ({ isUser }: { isUser: boolean }) => {
   const [showPurchased, setShowPurchased] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -78,6 +78,7 @@ const Categories = () => {
             checked={showPurchased}
             onCheckedChange={handleShowPurchasedChange}
             className="mt-0.5"
+            disabled={isUser}
           />
           <label
             htmlFor="terms"
