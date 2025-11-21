@@ -38,8 +38,6 @@ const Nav = () => {
   async function signout() {
     localStorage.removeItem("jwt");
 
-    // await fetchCurrentUser();
-
     router.push("/");
     window.location.reload();
   }
@@ -112,7 +110,7 @@ const Nav = () => {
         </div>
       </div>
 
-      <div className="hidden md:flex flex-col items-center justify-center gap-2 md:justify-start md:flex-row mt-2 mb-2">
+      <div className="md:flex flex-col items-center justify-center gap-2 md:justify-start md:flex-row mt-2 mb-2">
         {currentUser !== undefined ? (
           <div className="flex flex-row gap-3 justify-center items-center">
             <div className=" cursor-pointer bg-white/5 hover:bg-white/10 p-2 rounded-2xl hover:scale-105 transition-all duration-200">
@@ -124,7 +122,7 @@ const Nav = () => {
           </div>
         ) : (
           <>
-            <Link href="/auth/login">
+            <Link href="/auth/login" className="hidden md:block">
               <Button
                 variant="outline"
                 className="px-5 font-bold rounded-2xl border-white/20 hover:bg-white/10 transition-all duration-200"
@@ -133,7 +131,7 @@ const Nav = () => {
               </Button>
             </Link>
 
-            <Link href="/auth/signup">
+            <Link href="/auth/signup" className="hidden md:block">
               <Button
                 variant="default"
                 className="rounded-2xl font-bold bg-primary hover:bg-primary/90 transition-all duration-200"
