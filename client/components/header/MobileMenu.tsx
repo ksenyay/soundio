@@ -59,29 +59,15 @@ const MobileMenu = () => {
               {currentUser.username}
             </p>
           )}
-          <Link
-            href="/"
-            onClick={() => setOpen(false)}
-            className="px-6 py-4 hover:bg-white/10 transition-colors border-b-1 border-white/10"
-          >
-            Shop
-          </Link>
 
           {currentUser ? (
             <>
-              <Link
+              {/* <Link
                 href="/profile"
                 onClick={() => setOpen(false)}
                 className="px-6 py-4 hover:bg-white/10 transition-colors border-b-1 border-white/10"
               >
                 Profile {}
-              </Link>
-              <Link
-                href="/new"
-                onClick={() => setOpen(false)}
-                className="px-6 py-4 hover:bg-white/10 transition-colors border-b-1 border-white/10"
-              >
-                + Add New
               </Link>
 
               <button
@@ -89,7 +75,7 @@ const MobileMenu = () => {
                 className="px-6 py-4 text-left hover:bg-white/10 transition-colors  text-red-400"
               >
                 Sign out
-              </button>
+              </button> */}
             </>
           ) : (
             <>
