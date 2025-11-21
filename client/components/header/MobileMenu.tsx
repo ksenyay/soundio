@@ -29,7 +29,7 @@ const MobileMenu = () => {
   }, []);
 
   return (
-    currentUser && (
+    !currentUser && (
       <div className="md:hidden">
         <button
           onClick={() => setOpen(!open)}
