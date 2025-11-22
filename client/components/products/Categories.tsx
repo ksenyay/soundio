@@ -21,7 +21,6 @@ const Categories = () => {
     { title: "All categories", color: "bg-gray-500" },
     { title: "Nature", color: "bg-green-500" },
     { title: "Urban", color: "bg-blue-500" },
-    { title: "Noise", color: "bg-red-500" },
     { title: "Seasonal", color: "bg-orange-500" },
     { title: "Meditation", color: "bg-purple-500" },
     { title: "Ambient", color: "bg-teal-500" },

@@ -8,14 +8,7 @@ import useRequest from "../../hooks/sendRequest";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-const categories = [
-  "nature",
-  "urban",
-  "noise",
-  "seasonal",
-  "meditation",
-  "instrumental",
-];
+const categories = ["nature", "urban", "seasonal", "meditation", "ambient"];
 
 const CreateSoundForm = () => {
   const [formData, setFormData] = useState({

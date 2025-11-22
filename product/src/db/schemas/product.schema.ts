@@ -39,14 +39,7 @@ export class Product {
 
   @Prop({
     required: true,
-    enum: [
-      'nature',
-      'urban',
-      'noise',
-      'seasonal',
-      'meditation',
-      'instrumental',
-    ],
+    enum: ['nature', 'urban', 'seasonal', 'meditation', 'ambient'],
   })
   category: Category;
 
