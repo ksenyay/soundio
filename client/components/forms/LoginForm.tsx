@@ -34,7 +34,7 @@ const LoginForm = () => {
     const token = res?.data.token;
     if (token) {
       localStorage.setItem("jwt", token);
-      toast.success("Logged in successfully!");
+
       router.push("/");
     }
     setIsLoading(false);

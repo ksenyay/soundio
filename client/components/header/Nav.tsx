@@ -39,9 +39,10 @@ const Nav = () => {
   async function signout() {
     localStorage.removeItem("jwt");
 
+    toast.success("Signed out successfully!");
+
     router.push("/");
     window.location.reload();
-    toast.success("Signed out successfully!");
   }
 
   function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {

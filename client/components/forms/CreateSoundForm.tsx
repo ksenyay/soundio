@@ -61,7 +61,6 @@ const CreateSoundForm = () => {
 
     await makeRequest(data);
     setIsLoading(false);
-    toast.success("Sound created successfully!");
     router.push("/");
   }
 
