@@ -57,6 +57,7 @@ export class ProductsService {
 
     const products = await this.products
       .find(query)
+      .sort({ createdAt: -1 })
       .skip((pageNum - 1) * limitNum)
       .limit(limitNum)
       .exec();
