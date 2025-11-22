@@ -17,8 +17,7 @@ const CancelPage = () => {
       `https://payment-service-itru.onrender.com/api/payments/cancelled`,
       {
         sessionId,
-      },
-      { withCredentials: true }
+      }
     );
 
     setProductId(res.data.productId);
@@ -26,7 +25,7 @@ const CancelPage = () => {
 
   useEffect(() => {
     handleCancelledCase();
-  });
+  }, []);
   return (
     <div className="max-w-md mx-auto mt-16 p-8 bg-white/5 rounded-2xl border border-white/10 shadow-lg text-center">
       <h2 className="text-2xl font-bold text-red-500 mb-6">

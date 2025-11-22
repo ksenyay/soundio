@@ -26,7 +26,7 @@ const SuccessPage = () => {
 
   useEffect(() => {
     handleSuccessCase();
-  });
+  }, []);
 
   return (
     <div className="max-w-md mx-auto mt-16 p-8 bg-white/5 rounded-2xl border border-white/10 shadow-lg text-center">
