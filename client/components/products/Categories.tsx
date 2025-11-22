@@ -46,8 +46,10 @@ const Categories = () => {
     const params = new URLSearchParams(window.location.search);
     if (checked) {
       params.set("purchased", "true");
+      params.set("page", "1");
     } else {
       params.delete("purchased");
+      params.set("page", "1");
     }
     router.push(`?${params.toString()}`);
     setShowPurchased(checked);
