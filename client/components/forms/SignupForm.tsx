@@ -44,8 +44,8 @@ const SignupForm = () => {
     const token = res?.data.token;
     if (token) {
       localStorage.setItem("jwt", token);
-      router.push("/");
       toast.success("Account created successfully!");
+      router.push("/");
     }
     setIsLoading(false);
   }
