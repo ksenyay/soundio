@@ -6,6 +6,7 @@ import Image from "next/image";
 import { CurrentUser, Product } from "@/types/types";
 import { useRouter } from "next/navigation";
 import { buildClient } from "@/api/buildClient";
+import { toast } from "sonner";
 
 const Profile = () => {
   const [productList, setProductList] = useState<Product[]>([]);
@@ -23,6 +24,7 @@ const Profile = () => {
       }
     );
     setProductList(productList.filter((p) => p.id !== id));
+    toast.success("Sound removed successfully!");
   }
 
   function handleRedirect(id: string) {

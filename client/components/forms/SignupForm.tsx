@@ -10,6 +10,7 @@ import useRequest from "../../hooks/sendRequest";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const SignupForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -44,6 +45,7 @@ const SignupForm = () => {
     if (token) {
       localStorage.setItem("jwt", token);
       router.push("/");
+      toast.success("Account created successfully!");
     }
     setIsLoading(false);
   }

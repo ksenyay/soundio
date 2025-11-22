@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
 import { Download, Play, Square } from "lucide-react";
 import { buildClient } from "@/api/buildClient";
+import { toast } from "sonner";
 
 const AudioPlayer = ({
   product,
@@ -93,6 +94,7 @@ const AudioPlayer = ({
       link.click();
 
       window.URL.revokeObjectURL(link.href);
+      toast.success("Downloaded successfully!");
     } catch (error) {
       console.error("Download failed:", error);
     }

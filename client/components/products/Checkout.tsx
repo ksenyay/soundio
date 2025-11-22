@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import { buildClient } from "@/api/buildClient";
+import { toast } from "sonner";
 
 interface Product {
   id: string;
@@ -60,6 +61,7 @@ const Checkout = ({ id }: { id: string }) => {
       {}
     );
     router.back();
+    toast.success("Order cancelled!");
   }
 
   async function handleCheckout() {

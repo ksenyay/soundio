@@ -9,6 +9,7 @@ import ErrorMessage from "../ErrorMessage";
 import useRequest from "../../hooks/sendRequest";
 import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -34,6 +35,7 @@ const LoginForm = () => {
     if (token) {
       localStorage.setItem("jwt", token);
       router.push("/");
+      toast.success("Logged in successfully!");
     }
     setIsLoading(false);
   }

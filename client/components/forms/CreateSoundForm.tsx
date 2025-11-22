@@ -6,6 +6,7 @@ import { Button } from "../ui/button";
 import ErrorMessage from "../ErrorMessage";
 import useRequest from "../../hooks/sendRequest";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const categories = [
   "nature",
@@ -61,6 +62,7 @@ const CreateSoundForm = () => {
     await makeRequest(data);
     setIsLoading(false);
     router.push("/");
+    toast.success("Sound created successfully!");
   }
 
   return (

@@ -11,6 +11,7 @@ import ProfileDropdown from "./ProfileDropdown";
 import { Search } from "lucide-react";
 import { CurrentUser } from "@/types/types";
 import { buildClient } from "@/api/buildClient";
+import { toast } from "sonner";
 
 const Nav = () => {
   const [search, setSearch] = useState("");
@@ -40,6 +41,7 @@ const Nav = () => {
 
     router.push("/");
     window.location.reload();
+    toast.success("Signed out successfully!");
   }
 
   function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {

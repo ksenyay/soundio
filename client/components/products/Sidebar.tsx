@@ -5,6 +5,7 @@ import React from "react";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import { buildClient } from "@/api/buildClient";
+import { toast } from "sonner";
 
 const Sidebar = ({
   product,
@@ -41,6 +42,7 @@ const Sidebar = ({
       if (order) {
         router.push(`/checkout/${order.data.id}`);
       }
+      toast.success("Order created!");
       setIsLoading(false);
     } else {
       router.push("/auth/login");
