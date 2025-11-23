@@ -4,35 +4,11 @@ A full-stack microservices-based ambient sound marketplace where users can uploa
 
 Every sound includes a 25-second free preview, detailed description, category tags, and automatic download tracking. After completing a purchase, users gain immediate access to the full audio file.
 
-![Uploading Screenshot 2025-11-23 at 21.44.12.png…]()
+![Alt text](client/public/preview_1.png)
+![Alt text](client/public/preview_2.png)
 
-## Features
-
-### User Accounts
-
-- Secure registration and login
-- Users can upload their own sounds
-- Users can buy sounds from other creators
-- Profile includes uploaded sounds and the ability to delete them
-
-### Sound Marketplace
-
-Each sound includes:
-
-- Full description with duration, size, and format received from audio
-- 25-second preview, download counter
-
-Main shop page includes:
-
-- Category filtering
-- Purchased items filter
-- Search bar
-
-### Orders & Payments
-
-- Order service manages purchases
-- Payment service confirms transactions
-- Successful payment grants access to download
+### Live preview here under the link
+https://soundio-1.onrender.com/
 
 ## Microservices Architecture
 
@@ -64,8 +40,33 @@ Initially developed using Kubernetes. Later migrated to Docker Compose for easie
 
 All services fully containerized.
 
-### Live preview here under the link
-https://soundio-1.onrender.com/
+## Features
+
+### User Accounts
+
+- Secure registration and login
+- Users can upload their own sounds
+- Users can buy sounds from other creators
+- Profile includes uploaded sounds and the ability to delete them
+
+### Sound Marketplace
+
+Each sound includes:
+
+- Full description with duration, size, and format received from audio
+- 25-second preview, download counter
+
+Main shop page includes:
+
+- Category filtering
+- Purchased items filter
+- Search bar
+
+### Orders & Payments
+
+- Order service manages purchases
+- Payment service confirms transactions
+- Successful payment grants access to download
 
 ## How to run locally
 
