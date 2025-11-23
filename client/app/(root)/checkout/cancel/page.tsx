@@ -29,11 +29,13 @@ const CancelPage = () => {
       <h2 className="text-2xl font-bold text-red-500 mb-6">
         Payment Cancelled
       </h2>
-      <p className="text-gray-400">
+      <p className="text-gray-400 mb-2">
         Your payment was not completed. You can try again or return to the
         product page.
       </p>
-      <Link href={`/products`}>Go back</Link>
+      <div>
+        <Link href="/">Go back</Link>
+      </div>
     </div>
   );
 };
