@@ -35,7 +35,6 @@ const Sidebar = ({
       const order = await client.post(`${ORDER_BASE_URL}/api/orders`, {
         productId: id,
       });
-      console.log(order.data);
 
       if (order) {
         router.push(`/checkout/${order.data.id}`);

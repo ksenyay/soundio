@@ -36,7 +36,6 @@ export default ({ url, method, body, isFormData = false }: RequestOptions) => {
         headers,
       });
 
-      console.log("Success:", response.data);
       router.push("/");
 
       return response;

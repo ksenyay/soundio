@@ -14,7 +14,6 @@ const SuccessPage = () => {
   const client = buildClient();
 
   async function handleSuccessCase() {
-    console.log(sessionId);
     const res = await client.post(`${PAYMENT_BASE_URL}/api/payments/success`, {
       sessionId,
     });
