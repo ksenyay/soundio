@@ -4,6 +4,8 @@ A full-stack microservices-based ambient sound marketplace where users can uploa
 
 Every sound includes a 25-second free preview, detailed description, category tags, and automatic download tracking. After completing a purchase, users gain immediate access to the full audio file.
 
+![Uploading Screenshot 2025-11-23 at 21.44.12.png…]()
+
 ## Features
 
 ### User Accounts
