@@ -18,8 +18,7 @@ Every sound includes a 25-second free preview, detailed description, category ta
 Each sound includes:
 
 - Full description with duration, size, and format received from audio
-- 25-second preview
-- Download counter
+- 25-second preview, download counter
 
 Main shop page includes:
 
@@ -59,10 +58,19 @@ This project consists of 4 backend services + client:
 
 ### Infrastructure
 
-Initially developed using Kubernetes
-Later migrated to Docker Compose for easier deployment and development
+Initially developed using Kubernetes. Later migrated to Docker Compose for easier deployment and development.
 
-All services fully containerized
+All services fully containerized.
 
-## Live preview here under the link
+### Live preview here under the link
 https://soundio-1.onrender.com/
+
+## How to run locally
+
+1. Clone the repository
+git clone https://github.com/your-repo/soundio.git
+
+2. Create .env files for each service (Auth, Product, Order, Payment) with required environment variables (specified at .env.example).
+
+3. Start all services with Docker Compose
+docker compose up --build
