@@ -33,11 +33,7 @@ const CancelPage = () => {
         Your payment was not completed. You can try again or return to the
         product page.
       </p>
-      {productId ? (
-        <Link href={`/product/${productId}`}>Go back</Link>
-      ) : (
-        <span>Loading...</span>
-      )}
+      <Link href={`/products`}>Go back</Link>
     </div>
   );
 };
