@@ -76,19 +76,22 @@ export class PaymentsService {
 
   async markOrderAsCancelled(sessionId: string) {
     const session = await stripe.checkout.sessions.retrieve(sessionId);
+    console.log('Cancel session:', session);
 
     if (!session) {
       throw new NotFoundException();
     }
     const orderId = session.metadata?.orderId;
+    console.log('Cancel orderId:', orderId);
 
     const order = await this.orders.findById(orderId).exec();
+    console.log('Cancel order:', order);
 
     if (!order) throw new NotFoundException('Order not found');
 
     order.status = OrderStatus.Cancelled;
-
     await order.save();
+    console.log('Returning productId:', order.productId);
 
     this.paymentClient.emit('payment.cancelled', { orderId: order.id });
 
