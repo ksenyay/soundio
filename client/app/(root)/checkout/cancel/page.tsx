@@ -14,12 +14,9 @@ const CancelPage = () => {
   const client = buildClient();
 
   async function handleCancelledCase() {
-    const res = await client.post(
-      `${PAYMENT_BASE_URL}/api/payments/cancelled`,
-      {
-        sessionId,
-      }
-    );
+    const res = await client.post(`${PAYMENT_BASE_URL}/api/payments/cancel`, {
+      sessionId,
+    });
 
     setProductId(res.data.productId);
   }
