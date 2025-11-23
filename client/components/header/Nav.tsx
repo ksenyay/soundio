@@ -12,6 +12,7 @@ import { Search } from "lucide-react";
 import { CurrentUser } from "@/types/types";
 import { buildClient } from "@/api/buildClient";
 import { toast } from "sonner";
+import { AUTH_BASE_URL } from "@/constants/constants";
 
 const Nav = () => {
   const [search, setSearch] = useState("");
@@ -27,7 +28,7 @@ const Nav = () => {
   async function fetchCurrentUser() {
     try {
       const response = await client.get(
-        `https://soundio.onrender.com/api/users/currentuser`
+        `${AUTH_BASE_URL}/api/users/currentuser`
       );
       setCurrentUser(response.data.currentUser);
     } catch (error) {

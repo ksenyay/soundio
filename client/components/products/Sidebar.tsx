@@ -6,6 +6,7 @@ import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import { buildClient } from "@/api/buildClient";
 import { toast } from "sonner";
+import { ORDER_BASE_URL } from "@/constants/constants";
 
 const Sidebar = ({
   product,
@@ -31,12 +32,9 @@ const Sidebar = ({
   async function handlePurchase(id: string) {
     if (isLoggedIn) {
       setIsLoading(true);
-      const order = await client.post(
-        `https://soundio-nfng.onrender.com/api/orders`,
-        {
-          productId: id,
-        }
-      );
+      const order = await client.post(`${ORDER_BASE_URL}/api/orders`, {
+        productId: id,
+      });
       console.log(order.data);
 
       if (order) {

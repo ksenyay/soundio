@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { buildClient } from "@/api/buildClient";
+import { PAYMENT_BASE_URL } from "@/constants/constants";
 
 const SuccessPage = () => {
   const searchParams = useSearchParams();
@@ -14,12 +15,9 @@ const SuccessPage = () => {
 
   async function handleSuccessCase() {
     console.log(sessionId);
-    const res = await client.post(
-      `https://payment-service-itru.onrender.com/api/payments/success`,
-      {
-        sessionId,
-      }
-    );
+    const res = await client.post(`${PAYMENT_BASE_URL}/api/payments/success`, {
+      sessionId,
+    });
 
     setProductId(res.data.productId);
   }

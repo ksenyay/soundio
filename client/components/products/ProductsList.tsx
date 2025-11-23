@@ -7,6 +7,11 @@ import { useSearchParams } from "next/navigation";
 import { Product } from "@/types/types";
 import { buildClient } from "@/api/buildClient";
 import Spinner from "./Spinner";
+import {
+  AUTH_BASE_URL,
+  ORDER_BASE_URL,
+  PRODUCT_BASE_URL,
+} from "@/constants/constants";
 
 const ProductsList = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -27,7 +32,7 @@ const ProductsList = () => {
       setLoading(true);
 
       const userReq = client
-        .get("https://soundio.onrender.com/api/users/currentuser")
+        .get(`${AUTH_BASE_URL}/api/users/currentuser`)
         .catch(() => null);
 
       const params: Record<string, string | number> = { page, limit };
@@ -35,10 +40,9 @@ const ProductsList = () => {
         params.category = category.toLowerCase();
       if (search) params.search = search.toLowerCase();
 
-      const productsReq = client.get(
-        "https://product-service-fsp5.onrender.com/api/products",
-        { params }
-      );
+      const productsReq = client.get(`${PRODUCT_BASE_URL}/api/products`, {
+        params,
+      });
 
       const [userRes, productsRes] = await Promise.all([userReq, productsReq]);
 
@@ -49,7 +53,7 @@ const ProductsList = () => {
 
       if (showPurchased && currentUserId) {
         const ordersRes = await client.get(
-          `https://soundio-nfng.onrender.com/api/orders/users/${currentUserId}`
+          `${ORDER_BASE_URL}/api/orders/users/${currentUserId}`
         );
 
         const purchasedIds = ordersRes.data.map(

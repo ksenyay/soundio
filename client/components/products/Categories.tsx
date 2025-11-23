@@ -1,4 +1,5 @@
 "use client";
+import { AUTH_BASE_URL } from "@/constants/constants";
 import { Checkbox } from "../ui/checkbox";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
@@ -60,7 +61,7 @@ const Categories = () => {
         const { buildClient } = await import("@/api/buildClient");
         const client = buildClient();
         const { data } = await client.get(
-          `https://soundio.onrender.com/api/users/currentuser`
+          `${AUTH_BASE_URL}/api/users/currentuser`
         );
         setIsUser(!!data?.currentUser?.id);
       } catch (error) {

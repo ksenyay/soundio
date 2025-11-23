@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import clsx from "clsx";
 import { CurrentUser } from "@/types/types";
+import { AUTH_BASE_URL } from "@/constants/constants";
 
 const MobileMenu = () => {
   const [open, setOpen] = useState(false);
@@ -18,7 +19,7 @@ const MobileMenu = () => {
         const { buildClient } = await import("@/api/buildClient");
         const client = buildClient();
         const response = await client.get(
-          `https://soundio.onrender.com/api/users/currentuser`
+          `${AUTH_BASE_URL}/api/users/currentuser`
         );
         setCurrentUser(response.data.currentUser);
       } catch (error) {

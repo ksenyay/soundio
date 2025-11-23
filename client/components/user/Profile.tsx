@@ -7,6 +7,7 @@ import { CurrentUser, Product } from "@/types/types";
 import { useRouter } from "next/navigation";
 import { buildClient } from "@/api/buildClient";
 import { toast } from "sonner";
+import { AUTH_BASE_URL, PRODUCT_BASE_URL } from "@/constants/constants";
 
 const Profile = () => {
   const [productList, setProductList] = useState<Product[]>([]);
@@ -17,12 +18,9 @@ const Profile = () => {
   const client = buildClient();
 
   async function handleDelete(id: string) {
-    await client.delete(
-      `https://product-service-fsp5.onrender.com/api/products/${id}`,
-      {
-        withCredentials: true,
-      }
-    );
+    await client.delete(`${PRODUCT_BASE_URL}/api/products/${id}`, {
+      withCredentials: true,
+    });
     setProductList(productList.filter((p) => p.id !== id));
     toast.success("Sound removed successfully!");
   }
@@ -35,7 +33,7 @@ const Profile = () => {
     setLoading(true);
     try {
       const userRes = await client.get(
-        `https://soundio.onrender.com/api/users/currentuser`
+        `${AUTH_BASE_URL}/api/users/currentuser`
       );
       const user = userRes.data.currentUser;
       setCurrentUser(user);
@@ -45,7 +43,7 @@ const Profile = () => {
         return;
       }
       const productsRes = await client.get(
-        `https://product-service-fsp5.onrender.com/api/products/my-products/${user.id}`
+        `${PRODUCT_BASE_URL}/api/products/my-products/${user.id}`
       );
       setProductList(productsRes.data);
     } catch (error) {

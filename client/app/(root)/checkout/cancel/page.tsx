@@ -1,6 +1,7 @@
 "use client";
 
 import { buildClient } from "@/api/buildClient";
+import { PAYMENT_BASE_URL } from "@/constants/constants";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -14,7 +15,7 @@ const CancelPage = () => {
 
   async function handleCancelledCase() {
     const res = await client.post(
-      `https://payment-service-itru.onrender.com/api/payments/cancelled`,
+      `${PAYMENT_BASE_URL}/api/payments/cancelled`,
       {
         sessionId,
       }

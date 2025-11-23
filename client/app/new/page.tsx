@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import CreateSoundForm from "@/components/forms/CreateSoundForm";
 import { useRouter } from "next/navigation";
 import { buildClient } from "@/api/buildClient";
+import { AUTH_BASE_URL } from "@/constants/constants";
 
 const New = () => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -14,7 +15,7 @@ const New = () => {
   async function fetchCurrentUser() {
     try {
       const response = await client.get(
-        `https://soundio.onrender.com/api/users/currentuser`
+        `${AUTH_BASE_URL}/api/users/currentuser`
       );
       setCurrentUser(response.data.currentUser);
       if (!response.data.currentUser) {

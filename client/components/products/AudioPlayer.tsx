@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import { Download, Play, Square } from "lucide-react";
 import { buildClient } from "@/api/buildClient";
 import { toast } from "sonner";
+import { PRODUCT_BASE_URL } from "@/constants/constants";
 
 const AudioPlayer = ({
   product,
@@ -73,7 +74,7 @@ const AudioPlayer = ({
   async function updateDownloadCount(id: string) {
     try {
       await client.patch(
-        `https://product-service-fsp5.onrender.com/api/products/downloads/${id}`,
+        `${PRODUCT_BASE_URL}/api/products/downloads/${id}`,
         {}
       );
     } catch (error) {

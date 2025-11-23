@@ -5,6 +5,11 @@ import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import { buildClient } from "@/api/buildClient";
 import { toast } from "sonner";
+import {
+  AUTH_BASE_URL,
+  ORDER_BASE_URL,
+  PAYMENT_BASE_URL,
+} from "@/constants/constants";
 
 interface Product {
   id: string;
@@ -34,9 +39,7 @@ const Checkout = ({ id }: { id: string }) => {
 
   async function fetchOrder() {
     try {
-      const res = await client.get(
-        `https://soundio-nfng.onrender.com/api/orders/${id}`
-      );
+      const res = await client.get(`${ORDER_BASE_URL}/api/orders/${id}`);
       setOrder(res.data);
     } catch (err) {
       console.error(err);
@@ -45,9 +48,7 @@ const Checkout = ({ id }: { id: string }) => {
 
   async function fetchCurrentUser() {
     try {
-      const res = await client.get(
-        `https://soundio.onrender.com/api/users/currentuser`
-      );
+      const res = await client.get(`${AUTH_BASE_URL}/api/users/currentuser`);
       setCurrentUser(res.data.currentUser);
     } catch (err) {
       setCurrentUser(null);
@@ -56,10 +57,7 @@ const Checkout = ({ id }: { id: string }) => {
   }
 
   async function cancelOrder() {
-    await client.patch(
-      `https://soundio-nfng.onrender.com/api/orders/${id}`,
-      {}
-    );
+    await client.patch(`${ORDER_BASE_URL}/api/orders/${id}`, {});
     router.back();
     toast.success("Order cancelled!");
   }
@@ -69,7 +67,7 @@ const Checkout = ({ id }: { id: string }) => {
     try {
       setLoading(true);
       const res = await client.post(
-        `https://payment-service-itru.onrender.com/api/payments/checkout`,
+        `${PAYMENT_BASE_URL}/api/payments/checkout`,
         {
           orderId: order.id,
           email: currentUser.email,

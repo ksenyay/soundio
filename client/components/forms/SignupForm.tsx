@@ -11,6 +11,7 @@ import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { AUTH_BASE_URL } from "@/constants/constants";
 
 const SignupForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -24,7 +25,7 @@ const SignupForm = () => {
   const router = useRouter();
 
   const { makeRequest, errors } = useRequest({
-    url: `https://soundio.onrender.com/api/users/signup`,
+    url: `${AUTH_BASE_URL}/api/users/signup`,
     method: "post",
     body: {
       username: formData.username,

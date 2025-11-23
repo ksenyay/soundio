@@ -17,6 +17,11 @@ import Sidebar from "./Sidebar";
 import { buildClient } from "@/api/buildClient";
 import Spinner from "./Spinner";
 import { CurrentUser } from "@/types/types";
+import {
+  AUTH_BASE_URL,
+  ORDER_BASE_URL,
+  PRODUCT_BASE_URL,
+} from "@/constants/constants";
 
 type Product = {
   id: string;
@@ -47,7 +52,7 @@ const ProductPage = ({ id }: { id: string }) => {
 
       if (!product) {
         const response = await client.get(
-          `https://product-service-fsp5.onrender.com/api/products/${id}`
+          `${PRODUCT_BASE_URL}/api/products/${id}`
         );
         setProduct(response.data);
         return;
@@ -59,7 +64,7 @@ const ProductPage = ({ id }: { id: string }) => {
           return;
         }
         const res = await client.get(
-          `https://soundio-nfng.onrender.com/api/orders/users/${currentUser?.id}`
+          `${ORDER_BASE_URL}/api/orders/users/${currentUser?.id}`
         );
         const userProducts = res.data;
         setIsPurchased(
@@ -80,7 +85,7 @@ const ProductPage = ({ id }: { id: string }) => {
 
     try {
       const userRes = await client.get(
-        `https://soundio.onrender.com/api/users/currentuser`
+        `${AUTH_BASE_URL}/api/users/currentuser`
       );
       currentUser = userRes.data.currentUser;
 

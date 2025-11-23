@@ -7,6 +7,7 @@ import ErrorMessage from "../ErrorMessage";
 import useRequest from "../../hooks/sendRequest";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { PRODUCT_BASE_URL } from "@/constants/constants";
 
 const categories = ["nature", "urban", "seasonal", "meditation", "ambient"];
 
@@ -25,7 +26,7 @@ const CreateSoundForm = () => {
   const router = useRouter();
 
   const { makeRequest, errors } = useRequest({
-    url: `https://product-service-fsp5.onrender.com/api/products`,
+    url: `${PRODUCT_BASE_URL}/api/products`,
     method: "post",
     isFormData: true,
   });
